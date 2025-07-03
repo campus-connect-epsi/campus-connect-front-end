@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Menu, X, Bell, User, Settings, LogOut, Calendar, MessageSquare, FolderOpen, Wrench, FileText, MessageCircle } from "lucide-react";
+import { Menu, X, Bell, User, Settings, LogOut, Calendar, MessageSquare, FolderOpen, Wrench, FileText, MessageCircle, CalendarDays } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 
@@ -19,6 +19,7 @@ const Navigation = () => {
     { path: "/projects", label: "Projets", icon: FolderOpen },
     { path: "/forum", label: "Forum", icon: MessageSquare },
     { path: "/events", label: "Événements", icon: Calendar },
+    { path: "/schedule", label: "Emploi du Temps", icon: CalendarDays },
     { path: "/documents", label: "Documents", icon: FileText },
     { path: "/discussions", label: "Discussions", icon: MessageCircle },
   ];

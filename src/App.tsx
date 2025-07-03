@@ -21,6 +21,7 @@ import ReserveEquipment from "./pages/ReserveEquipment";
 import NewDiscussion from "./pages/NewDiscussion";
 import NewEvent from "./pages/NewEvent";
 import NotFound from "./pages/NotFound";
+import Schedule from "./pages/Schedule";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/events/new" element={<NewEvent />} />
           <Route path="/equipment/:id" element={<EquipmentDetail />} />
           <Route path="/equipment/:id/reserve" element={<ReserveEquipment />} />
+          <Route path="/schedule" element={<Schedule />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
