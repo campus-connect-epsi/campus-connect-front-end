@@ -100,8 +100,10 @@ const Discussions = () => {
                 <CardTitle className="flex items-center justify-between">
                   <span>Mes Discussions</span>
                   <Button size="sm">
-                    <MessageCircle className="h-4 w-4 mr-2" />
-                    Nouvelle
+                    <a href="/discussions/new" className="flex items-center">
+                      <MessageCircle className="h-4 w-4 mr-2" />
+                      Nouvelle
+                    </a>
                   </Button>
                 </CardTitle>
                 <div className="relative">

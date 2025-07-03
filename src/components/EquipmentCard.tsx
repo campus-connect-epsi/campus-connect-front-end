@@ -74,11 +74,15 @@ const EquipmentCard = ({ equipment }: EquipmentCardProps) => {
             }`}
             disabled={!isAvailable}
           >
-            <Calendar className="h-4 w-4 mr-2" />
-            {isAvailable ? "Réserver" : "Indisponible"}
+            <a href={`/equipment/${equipment.id}/reserve`} className="flex items-center">
+              <Calendar className="h-4 w-4 mr-2" />
+              {isAvailable ? "Réserver" : "Indisponible"}
+            </a>
           </Button>
           <Button variant="outline" size="sm">
+            <a href={`/equipment/${equipment.id}`} className="flex items-center">
             Détails
+            </a>
           </Button>
         </div>
       </CardContent>

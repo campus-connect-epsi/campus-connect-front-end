@@ -90,8 +90,10 @@ const Documents = () => {
             Gestion des Documents
           </h1>
           <Button className="bg-primary hover:bg-primary/90">
-            <Upload className="h-4 w-4 mr-2" />
-            Nouveau Document
+            <a href="/documents/upload" className="flex items-center">
+              <Upload className="h-4 w-4 mr-2" />
+              Nouveau Document
+            </a>
           </Button>
         </div>
 
