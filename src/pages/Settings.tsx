@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
 import Navigation from "@/components/Navigation";
 
 const Settings = () => {
@@ -414,19 +413,31 @@ const Settings = () => {
                     </Card>
                   </div>
                   
-                  <div className="h-64">
+                  <div className="h-64 bg-muted rounded-lg p-4">
                     <h3 className="text-lg font-semibold mb-4">Utilisation des ressources (24h)</h3>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={performanceData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="time" />
-                        <YAxis />
-                        <Tooltip />
-                        <Area type="monotone" dataKey="cpu" stackId="1" stroke="hsl(var(--primary))" fill="hsl(var(--primary))" fillOpacity={0.6} />
-                        <Area type="monotone" dataKey="memory" stackId="1" stroke="hsl(var(--secondary))" fill="hsl(var(--secondary))" fillOpacity={0.6} />
-                        <Area type="monotone" dataKey="disk" stackId="1" stroke="hsl(var(--accent))" fill="hsl(var(--accent))" fillOpacity={0.6} />
-                      </AreaChart>
-                    </ResponsiveContainer>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">CPU</span>
+                        <div className="w-32 bg-background rounded-full h-2">
+                          <div className="bg-primary h-2 rounded-full" style={{width: '65%'}}></div>
+                        </div>
+                        <span className="text-sm font-medium">65%</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Mémoire</span>
+                        <div className="w-32 bg-background rounded-full h-2">
+                          <div className="bg-secondary h-2 rounded-full" style={{width: '70%'}}></div>
+                        </div>
+                        <span className="text-sm font-medium">70%</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Disque</span>
+                        <div className="w-32 bg-background rounded-full h-2">
+                          <div className="bg-accent h-2 rounded-full" style={{width: '40%'}}></div>
+                        </div>
+                        <span className="text-sm font-medium">40%</span>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
