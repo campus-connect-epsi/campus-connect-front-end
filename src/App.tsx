@@ -16,6 +16,10 @@ import Settings from "./pages/Settings";
 import AdminPanel from "./pages/AdminPanel";
 import Documents from "./pages/Documents";
 import Discussions from "./pages/Discussions";
+import EquipmentDetail from "./pages/EquipmentDetail";
+import ReserveEquipment from "./pages/ReserveEquipment";
+import NewDiscussion from "./pages/NewDiscussion";
+import NewEvent from "./pages/NewEvent";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +43,10 @@ const App = () => (
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/discussions" element={<Discussions />} />
+          <Route path="/discussions/new" element={<NewDiscussion />} />
+          <Route path="/events/new" element={<NewEvent />} />
+          <Route path="/equipment/:id" element={<EquipmentDetail />} />
+          <Route path="/equipment/:id/reserve" element={<ReserveEquipment />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
