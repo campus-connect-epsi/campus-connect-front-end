@@ -16,7 +16,7 @@ const Equipment = () => {
       name: "Perceuse électrique BOSCH",
       category: "Outillage",
       status: "Disponible",
-      image: "/placeholder.svg",
+      image: "/equipement/Perceuse-electrique-BOSCH.png",
       description: "Perceuse électrique professionnelle avec accessoires",
       rating: 4.8
     },
@@ -25,7 +25,7 @@ const Equipment = () => {
       name: "Caméra DSLR Canon",
       category: "Multimédia",
       status: "Réservé",
-      image: "/placeholder.svg",
+      image: "/equipement/Camera-DSLR-Canon.png",
       description: "Caméra haute résolution pour projets créatifs",
       rating: 4.9
     },
@@ -34,7 +34,7 @@ const Equipment = () => {
       name: "Imprimante 3D Prusa",
       category: "Fabrication",
       status: "Disponible",
-      image: "/placeholder.svg",
+      image: "/equipement/Imprimante-3D-Prusa.png",
       description: "Imprimante 3D pour prototypage",
       rating: 4.7
     },
@@ -43,7 +43,7 @@ const Equipment = () => {
       name: "Oscilloscope numérique",
       category: "Électronique",
       status: "Disponible",
-      image: "/placeholder.svg",
+      image: "/equipement/Oscilloscope-numerique.png",
       description: "Oscilloscope 4 canaux pour mesures électroniques",
       rating: 4.6
     },
@@ -52,7 +52,7 @@ const Equipment = () => {
       name: "Microscope optique",
       category: "Laboratoire",
       status: "En maintenance",
-      image: "/placeholder.svg",
+      image: "/equipement/Microscope-optique.png",
       description: "Microscope binoculaire avec éclairage LED",
       rating: 4.5
     },
@@ -61,7 +61,7 @@ const Equipment = () => {
       name: "Kit Arduino Uno",
       category: "Électronique",
       status: "Disponible",
-      image: "/placeholder.svg",
+      image: "/equipement/Kit-Arduino-Uno.png",
       description: "Kit complet avec capteurs et composants",
       rating: 4.9
     }

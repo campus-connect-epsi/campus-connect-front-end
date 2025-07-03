@@ -24,7 +24,7 @@ const EquipmentDetail = () => {
       "Poids": "1.4 kg",
       "Autonomie": "45 min"
     },
-    images: ["/placeholder.svg"],
+    images: ["/equipement/Perceuse-electrique-BOSCH.png"],
     location: "Atelier Mécanique - Étagère B3",
     owner: "MyDIL - Campus Connect",
     rating: 4.5,
