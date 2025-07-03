@@ -1,11 +1,12 @@
 
 import { useState } from "react";
-import { User, Lock, Bell, Eye, Save, Edit } from "lucide-react";
+import { User, Lock, Bell, Eye, Save, Edit, BarChart3, Calendar, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
 import Navigation from "@/components/Navigation";
 
 const Settings = () => {
@@ -43,11 +44,24 @@ const Settings = () => {
     }));
   };
 
+  // Mock data for server performance
+  const performanceData = [
+    { time: "00:00", cpu: 45, memory: 60, disk: 30 },
+    { time: "04:00", cpu: 55, memory: 65, disk: 35 },
+    { time: "08:00", cpu: 70, memory: 75, disk: 45 },
+    { time: "12:00", cpu: 85, memory: 80, disk: 50 },
+    { time: "16:00", cpu: 65, memory: 70, disk: 40 },
+    { time: "20:00", cpu: 50, memory: 60, disk: 35 },
+  ];
+
   const tabs = [
     { id: "profile", label: "Profil", icon: User },
     { id: "security", label: "Sécurité", icon: Lock },
     { id: "notifications", label: "Notifications", icon: Bell },
-    { id: "privacy", label: "Confidentialité", icon: Eye }
+    { id: "privacy", label: "Confidentialité", icon: Eye },
+    { id: "performance", label: "Performance", icon: BarChart3 },
+    { id: "schedule", label: "Emploi du temps", icon: Calendar },
+    { id: "documents", label: "Documents", icon: FileText }
   ];
 
   return (
@@ -363,6 +377,184 @@ const Settings = () => {
                       <Button variant="outline" className="w-full justify-start text-red-600 hover:text-red-700">
                         Supprimer mon compte
                       </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Performance Tab */}
+            {activeTab === "performance" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <BarChart3 className="h-5 w-5 mr-2" />
+                    Performance du serveur
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="text-2xl font-bold text-primary">65%</div>
+                        <div className="text-sm text-muted-foreground">CPU</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="text-2xl font-bold text-primary">70%</div>
+                        <div className="text-sm text-muted-foreground">Mémoire</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="text-2xl font-bold text-primary">40%</div>
+                        <div className="text-sm text-muted-foreground">Disque</div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                  
+                  <div className="h-64">
+                    <h3 className="text-lg font-semibold mb-4">Utilisation des ressources (24h)</h3>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={performanceData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="time" />
+                        <YAxis />
+                        <Tooltip />
+                        <Area type="monotone" dataKey="cpu" stackId="1" stroke="hsl(var(--primary))" fill="hsl(var(--primary))" fillOpacity={0.6} />
+                        <Area type="monotone" dataKey="memory" stackId="1" stroke="hsl(var(--secondary))" fill="hsl(var(--secondary))" fillOpacity={0.6} />
+                        <Area type="monotone" dataKey="disk" stackId="1" stroke="hsl(var(--accent))" fill="hsl(var(--accent))" fillOpacity={0.6} />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Schedule Tab */}
+            {activeTab === "schedule" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Calendar className="h-5 w-5 mr-2" />
+                    Emploi du temps
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 gap-4">
+                    {/* Week navigation */}
+                    <div className="flex items-center justify-between mb-4">
+                      <Button variant="outline" size="sm">Semaine précédente</Button>
+                      <h3 className="font-semibold">Semaine du 1-7 Juillet 2024</h3>
+                      <Button variant="outline" size="sm">Semaine suivante</Button>
+                    </div>
+                    
+                    {/* Schedule grid */}
+                    <div className="grid grid-cols-7 gap-2 mb-4">
+                      {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((day, index) => (
+                        <div key={day} className="text-center font-medium p-2 bg-muted rounded">
+                          {day}
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Sample schedule events */}
+                    <div className="space-y-2">
+                      <div className="p-3 bg-primary/10 rounded-md border-l-4 border-primary">
+                        <div className="font-medium">Cours Génie Environnemental</div>
+                        <div className="text-sm text-muted-foreground">Lundi 8h00 - 10h00 • Amphi A</div>
+                      </div>
+                      <div className="p-3 bg-secondary/10 rounded-md border-l-4 border-secondary">
+                        <div className="font-medium">TP Laboratoire</div>
+                        <div className="text-sm text-muted-foreground">Mercredi 14h00 - 17h00 • Lab 203</div>
+                      </div>
+                      <div className="p-3 bg-accent/10 rounded-md border-l-4 border-accent">
+                        <div className="font-medium">Projet Recherche</div>
+                        <div className="text-sm text-muted-foreground">Vendredi 9h00 - 12h00 • Salle projet</div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Documents Tab */}
+            {activeTab === "documents" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <FileText className="h-5 w-5 mr-2" />
+                      Gestion des documents
+                    </div>
+                    <Button className="bg-primary hover:bg-primary/90">
+                      Nouveau document
+                    </Button>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {/* Document categories */}
+                    <div className="flex space-x-2 mb-4">
+                      <Button variant="outline" size="sm">Tous</Button>
+                      <Button variant="outline" size="sm">Personnels</Button>
+                      <Button variant="outline" size="sm">Partagés</Button>
+                      <Button variant="outline" size="sm">Projets</Button>
+                    </div>
+                    
+                    {/* Documents list */}
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-3 border rounded-md hover:bg-muted/50">
+                        <div className="flex items-center space-x-3">
+                          <FileText className="h-5 w-5 text-muted-foreground" />
+                          <div>
+                            <div className="font-medium">Rapport Projet Durable.pdf</div>
+                            <div className="text-sm text-muted-foreground">Personnel • 2.4 MB • Il y a 2 jours</div>
+                          </div>
+                        </div>
+                        <div className="flex space-x-2">
+                          <Button variant="outline" size="sm">Voir</Button>
+                          <Button variant="outline" size="sm">Partager</Button>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between p-3 border rounded-md hover:bg-muted/50">
+                        <div className="flex items-center space-x-3">
+                          <FileText className="h-5 w-5 text-muted-foreground" />
+                          <div>
+                            <div className="font-medium">Guide_Utilisation_Materiel.docx</div>
+                            <div className="text-sm text-muted-foreground">Partagé • 1.8 MB • Il y a 5 jours</div>
+                          </div>
+                        </div>
+                        <div className="flex space-x-2">
+                          <Button variant="outline" size="sm">Voir</Button>
+                          <Button variant="outline" size="sm">Télécharger</Button>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between p-3 border rounded-md hover:bg-muted/50">
+                        <div className="flex items-center space-x-3">
+                          <FileText className="h-5 w-5 text-muted-foreground" />
+                          <div>
+                            <div className="font-medium">Photos_Atelier_3D.zip</div>
+                            <div className="text-sm text-muted-foreground">Projet • 15.2 MB • Il y a 1 semaine</div>
+                          </div>
+                        </div>
+                        <div className="flex space-x-2">
+                          <Button variant="outline" size="sm">Voir</Button>
+                          <Button variant="outline" size="sm">Modifier</Button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Upload area */}
+                    <div className="mt-6 p-6 border-2 border-dashed border-muted-foreground/25 rounded-md text-center">
+                      <FileText className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                      <p className="text-sm text-muted-foreground">
+                        Glissez-déposez vos fichiers ici ou 
+                        <Button variant="link" className="p-0 h-auto ml-1">parcourez</Button>
+                      </p>
                     </div>
                   </div>
                 </CardContent>
