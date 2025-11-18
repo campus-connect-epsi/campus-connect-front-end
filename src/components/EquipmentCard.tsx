@@ -1,22 +1,8 @@
-
-import { Calendar, MapPin, Star, Clock } from "lucide-react";
+import { Calendar, MapPin, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
-interface Equipment {
-  id: number;
-  name: string;
-  category: string;
-  status: string;
-  image: string;
-  description: string;
-  rating: number;
-}
-
-interface EquipmentCardProps {
-  equipment: Equipment;
-}
+import type { EquipmentCardProps } from "@/types";
 
 const EquipmentCard = ({ equipment }: EquipmentCardProps) => {
   const isAvailable = equipment.status === "Disponible";

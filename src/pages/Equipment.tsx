@@ -1,71 +1,28 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search, Filter, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Navigation from "@/components/Navigation";
 import EquipmentCard from "@/components/EquipmentCard";
+import { useEquipement } from "@/composables/useEquipement";
 
 const Equipment = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  const equipmentItems = [
-    {
-      id: 1,
-      name: "Perceuse électrique BOSCH",
-      category: "Outillage",
-      status: "Disponible",
-      image: "/equipement/Perceuse-electrique-BOSCH.png",
-      description: "Perceuse électrique professionnelle avec accessoires",
-      rating: 4.8
-    },
-    {
-      id: 2,
-      name: "Caméra DSLR Canon",
-      category: "Multimédia",
-      status: "Réservé",
-      image: "/equipement/Camera-DSLR-Canon.png",
-      description: "Caméra haute résolution pour projets créatifs",
-      rating: 4.9
-    },
-    {
-      id: 3,
-      name: "Imprimante 3D Prusa",
-      category: "Fabrication",
-      status: "Disponible",
-      image: "/equipement/Imprimante-3D-Prusa.png",
-      description: "Imprimante 3D pour prototypage",
-      rating: 4.7
-    },
-    {
-      id: 4,
-      name: "Oscilloscope numérique",
-      category: "Électronique",
-      status: "Disponible",
-      image: "/equipement/Oscilloscope-numerique.png",
-      description: "Oscilloscope 4 canaux pour mesures électroniques",
-      rating: 4.6
-    },
-    {
-      id: 5,
-      name: "Microscope optique",
-      category: "Laboratoire",
-      status: "En maintenance",
-      image: "/equipement/Microscope-optique.png",
-      description: "Microscope binoculaire avec éclairage LED",
-      rating: 4.5
-    },
-    {
-      id: 6,
-      name: "Kit Arduino Uno",
-      category: "Électronique",
-      status: "Disponible",
-      image: "/equipement/Kit-Arduino-Uno.png",
-      description: "Kit complet avec capteurs et composants",
-      rating: 4.9
-    }
-  ];
+  const [equipmentItems, setEquipmentItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      const payload = await useEquipement();
+      if (mounted && Array.isArray(payload)) setEquipmentItems(payload);
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const categories = ["all", "Outillage", "Multimédia", "Fabrication", "Électronique", "Laboratoire"];
 
