@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Search, Plus, ThumbsUp, MessageCircle, Clock, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,82 +16,85 @@ const Forum = () => {
       title: "Comment utiliser l'imprimante 3D du Fab Lab ?",
       author: "Marie Dubois",
       avatar: "/placeholder.svg",
-      content: "Bonjour, je cherche des informations sur l'utilisation de l'imprimante 3D. Quelqu'un peut-il m'expliquer la procédure de réservation ?",
+      content:
+        "Bonjour, je cherche des informations sur l'utilisation de l'imprimante 3D. Quelqu'un peut-il m'expliquer la procédure de réservation ?",
       category: "Matériel",
       tags: ["impression-3d", "fab-lab", "aide"],
       likes: 12,
       replies: 8,
       createdAt: "2024-06-25T10:30:00Z",
-      isResolved: false
+      isResolved: false,
     },
     {
       id: 2,
       title: "Recherche coéquipiers pour projet robotique",
       author: "Pierre Martin",
       avatar: "/placeholder.svg",
-      content: "Je travaille sur un projet de robot autonome et je cherche des étudiants en électronique et programmation pour m'aider.",
+      content:
+        "Je travaille sur un projet de robot autonome et je cherche des étudiants en électronique et programmation pour m'aider.",
       category: "Projets",
       tags: ["robotique", "collaboration", "électronique"],
       likes: 25,
       replies: 15,
       createdAt: "2024-06-24T14:20:00Z",
-      isResolved: false
+      isResolved: false,
     },
     {
       id: 3,
       title: "Problème avec le microscope du labo",
       author: "Sophie Chen",
       avatar: "/placeholder.svg",
-      content: "Le microscope optique semble avoir un problème d'éclairage. À qui dois-je signaler ce dysfonctionnement ?",
+      content:
+        "Le microscope optique semble avoir un problème d'éclairage. À qui dois-je signaler ce dysfonctionnement ?",
       category: "Support",
       tags: ["microscope", "maintenance", "laboratoire"],
       likes: 5,
       replies: 3,
       createdAt: "2024-06-23T16:45:00Z",
-      isResolved: true
+      isResolved: true,
     },
     {
       id: 4,
       title: "Tutoriel : Programmation Arduino pour débutants",
       author: "Alex Moreau",
       avatar: "/placeholder.svg",
-      content: "Voici un guide complet pour débuter avec Arduino. Je partage mon expérience et quelques projets simples à réaliser.",
+      content:
+        "Voici un guide complet pour débuter avec Arduino. Je partage mon expérience et quelques projets simples à réaliser.",
       category: "Tutoriels",
       tags: ["arduino", "programmation", "débutant"],
       likes: 38,
       replies: 22,
       createdAt: "2024-06-22T09:15:00Z",
-      isResolved: false
-    }
+      isResolved: false,
+    },
   ];
 
   const categories = ["all", "Matériel", "Projets", "Support", "Tutoriels", "Général"];
 
-  const filteredPosts = forumPosts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.content.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredPosts = forumPosts.filter((post) => {
+    const matchesSearch =
+      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.content.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === "all" || post.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('fr-FR', {
-      day: 'numeric',
-      month: 'short',
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(dateString).toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
-            Forum d'Entraide
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">Forum d'Entraide</h1>
           <Button className="bg-[#00796B] hover:bg-[#00695C]">
             <Plus className="h-4 w-4 mr-2" />
             Nouvelle discussion
@@ -104,9 +106,7 @@ const Forum = () => {
           <div className="lg:w-64 bg-white p-6 rounded-lg shadow-sm">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Recherche
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Recherche</label>
                 <div className="relative">
                   <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                   <Input
@@ -119,11 +119,9 @@ const Forum = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Catégories
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Catégories</label>
                 <div className="space-y-2">
-                  {categories.map(category => (
+                  {categories.map((category) => (
                     <button
                       key={category}
                       onClick={() => setSelectedCategory(category)}
@@ -143,7 +141,7 @@ const Forum = () => {
 
           {/* Forum Posts */}
           <div className="flex-1 space-y-4">
-            {filteredPosts.map(post => (
+            {filteredPosts.map((post) => (
               <Card key={post.id} className="hover:shadow-md transition-shadow">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
@@ -170,12 +168,10 @@ const Forum = () => {
                     </div>
                   </div>
                 </CardHeader>
-                
+
                 <CardContent>
-                  <p className="text-gray-700 mb-4 line-clamp-2">
-                    {post.content}
-                  </p>
-                  
+                  <p className="text-gray-700 mb-4 line-clamp-2">{post.content}</p>
+
                   <div className="flex flex-wrap gap-2 mb-4">
                     {post.tags.map((tag, index) => (
                       <Badge key={index} variant="outline" className="text-xs">
@@ -184,7 +180,7 @@ const Forum = () => {
                       </Badge>
                     ))}
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                       <button className="flex items-center space-x-1 text-gray-600 hover:text-[#00796B]">

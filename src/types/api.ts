@@ -1,4 +1,4 @@
-type ApiStatus = 'success' | 'error';
+type ApiStatus = "success" | "error";
 
 export interface ApiResponse<T = unknown> {
   status: ApiStatus;
@@ -7,7 +7,7 @@ export interface ApiResponse<T = unknown> {
 }
 
 export interface ApiCallOptions<Body = unknown> {
-  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: Body;
   headers?: Record<string, string>;
 }

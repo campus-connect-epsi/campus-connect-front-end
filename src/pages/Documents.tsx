@@ -4,7 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import Navigation from "@/components/Navigation";
 
 const Documents = () => {
@@ -20,7 +26,7 @@ const Documents = () => {
       type: "pdf",
       shared: false,
       uploadDate: "2024-07-01",
-      owner: "Marie Dubois"
+      owner: "Marie Dubois",
     },
     {
       id: 2,
@@ -30,7 +36,7 @@ const Documents = () => {
       type: "docx",
       shared: true,
       uploadDate: "2024-06-28",
-      owner: "Admin MyDIL"
+      owner: "Admin MyDIL",
     },
     {
       id: 3,
@@ -40,7 +46,7 @@ const Documents = () => {
       type: "zip",
       shared: true,
       uploadDate: "2024-06-25",
-      owner: "Pierre Martin"
+      owner: "Pierre Martin",
     },
     {
       id: 4,
@@ -50,11 +56,11 @@ const Documents = () => {
       type: "pdf",
       shared: false,
       uploadDate: "2024-06-20",
-      owner: "Marie Dubois"
-    }
+      owner: "Marie Dubois",
+    },
   ];
 
-  const filteredDocuments = documents.filter(doc => {
+  const filteredDocuments = documents.filter((doc) => {
     const matchesCategory = selectedCategory === "all" || doc.category === selectedCategory;
     const matchesSearch = doc.name.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
@@ -67,28 +73,30 @@ const Documents = () => {
   const getCategoryBadge = (category: string) => {
     const variants: Record<string, "default" | "destructive" | "outline" | "secondary"> = {
       personnel: "default",
-      partage: "secondary", 
-      projet: "outline"
+      partage: "secondary",
+      projet: "outline",
     };
-    
+
     const labels = {
       personnel: "Personnel",
       partage: "Partagé",
-      projet: "Projet"
+      projet: "Projet",
     };
 
-    return <Badge variant={variants[category] || "default"}>{labels[category as keyof typeof labels]}</Badge>;
+    return (
+      <Badge variant={variants[category] || "default"}>
+        {labels[category as keyof typeof labels]}
+      </Badge>
+    );
   };
 
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-foreground">
-            Gestion des Documents
-          </h1>
+          <h1 className="text-3xl font-bold text-foreground">Gestion des Documents</h1>
           <Button className="bg-primary hover:bg-primary/90">
             <a href="/documents/upload" className="flex items-center">
               <Upload className="h-4 w-4 mr-2" />
@@ -140,14 +148,14 @@ const Documents = () => {
                         <span className="text-sm text-muted-foreground">{doc.size}</span>
                         <span className="text-sm text-muted-foreground">•</span>
                         <span className="text-sm text-muted-foreground">
-                          {new Date(doc.uploadDate).toLocaleDateString('fr-FR')}
+                          {new Date(doc.uploadDate).toLocaleDateString("fr-FR")}
                         </span>
                         <span className="text-sm text-muted-foreground">•</span>
                         <span className="text-sm text-muted-foreground">{doc.owner}</span>
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center space-x-2">
                     <Button variant="outline" size="sm">
                       <Eye className="h-4 w-4" />
@@ -182,9 +190,7 @@ const Documents = () => {
               <p className="text-muted-foreground mb-4">
                 Glissez-déposez vos fichiers ici ou cliquez pour parcourir
               </p>
-              <Button>
-                Choisir des fichiers
-              </Button>
+              <Button>Choisir des fichiers</Button>
             </div>
           </CardContent>
         </Card>

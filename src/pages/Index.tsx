@@ -1,6 +1,16 @@
-
 import { useState } from "react";
-import { Search, Menu, X, Calendar, MessageCircle, Share2, Users, Wrench, BookOpen, Star } from "lucide-react";
+import {
+  Search,
+  Menu,
+  X,
+  Calendar,
+  MessageCircle,
+  Share2,
+  Users,
+  Wrench,
+  BookOpen,
+  Star,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,7 +32,7 @@ const Index = () => {
       status: "Disponible",
       image: "/placeholder.svg",
       description: "Perceuse électrique professionnelle avec accessoires",
-      rating: 4.8
+      rating: 4.8,
     },
     {
       id: 2,
@@ -31,7 +41,7 @@ const Index = () => {
       status: "Réservé",
       image: "/placeholder.svg",
       description: "Caméra haute résolution pour projets créatifs",
-      rating: 4.9
+      rating: 4.9,
     },
     {
       id: 3,
@@ -40,8 +50,8 @@ const Index = () => {
       status: "Disponible",
       image: "/placeholder.svg",
       description: "Imprimante 3D pour prototypage",
-      rating: 4.7
-    }
+      rating: 4.7,
+    },
   ];
 
   const projects = [
@@ -53,7 +63,7 @@ const Index = () => {
       image: "/placeholder.svg",
       tags: ["IoT", "Environnement", "Innovation"],
       likes: 42,
-      date: "2024-06-15"
+      date: "2024-06-15",
     },
     {
       id: 2,
@@ -63,13 +73,13 @@ const Index = () => {
       image: "/placeholder.svg",
       tags: ["Mobile", "Durable", "Social"],
       likes: 38,
-      date: "2024-06-10"
-    }
+      date: "2024-06-10",
+    },
   ];
 
   const categories = ["all", "Outillage", "Multimédia", "Fabrication", "Électronique"];
 
-  const filteredEquipment = equipmentItems.filter(item => {
+  const filteredEquipment = equipmentItems.filter((item) => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === "all" || item.category === selectedCategory;
     return matchesSearch && matchesCategory;
@@ -78,7 +88,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      
+
       <HeroSection />
 
       {/* Features Section */}
@@ -131,9 +141,7 @@ const Index = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
-              Matériel Disponible
-            </h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">Matériel Disponible</h2>
             <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -149,7 +157,7 @@ const Index = () => {
                 onChange={(e) => setSelectedCategory(e.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00796B]"
               >
-                {categories.map(category => (
+                {categories.map((category) => (
                   <option key={category} value={category}>
                     {category === "all" ? "Toutes catégories" : category}
                   </option>
@@ -159,7 +167,7 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredEquipment.map(item => (
+            {filteredEquipment.map((item) => (
               <EquipmentCard key={item.id} equipment={item} />
             ))}
           </div>
@@ -170,16 +178,17 @@ const Index = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-800">
-              Projets Étudiants Récents
-            </h2>
-            <Button variant="outline" className="border-[#00796B] text-[#00796B] hover:bg-[#00796B] hover:text-white">
+            <h2 className="text-3xl font-bold text-gray-800">Projets Étudiants Récents</h2>
+            <Button
+              variant="outline"
+              className="border-[#00796B] text-[#00796B] hover:bg-[#00796B] hover:text-white"
+            >
               Voir tous les projets
             </Button>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {projects.map(project => (
+            {projects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
@@ -189,17 +198,17 @@ const Index = () => {
       {/* CTA Section */}
       <section className="py-16 bg-[#00796B] text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">
-            Prêt à rejoindre Campus Connect ?
-          </h2>
-          <p className="text-xl mb-8 text-green-100">
-            Votre matériel, vos projets, votre avenir
-          </p>
+          <h2 className="text-3xl font-bold mb-4">Prêt à rejoindre Campus Connect ?</h2>
+          <p className="text-xl mb-8 text-green-100">Votre matériel, vos projets, votre avenir</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-[#FFC107] text-gray-800 hover:bg-yellow-500">
               Créer un compte
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[#00796B]">
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-[#00796B]"
+            >
               Se connecter
             </Button>
           </div>
@@ -212,9 +221,7 @@ const Index = () => {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <h3 className="text-xl font-bold mb-4">Campus Connect</h3>
-              <p className="text-gray-400">
-                Plateforme collaborative pour étudiants
-              </p>
+              <p className="text-gray-400">Plateforme collaborative pour étudiants</p>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Services</h4>

@@ -1,22 +1,30 @@
-
 import { useEffect, useState } from "react";
 import { Search, Filter, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Navigation from "@/components/Navigation";
 import EquipmentCard from "@/components/EquipmentCard";
-import { useEquipement } from "@/composables/useEquipement";
+import { fetchEquipement } from "@/composables/useEquipement";
+
+interface EquipmentItem {
+  id: number;
+  name: string;
+  category: string;
+  image: string;
+  status: "available" | "reserved" | "maintenance";
+  description: string;
+}
 
 const Equipment = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  const [equipmentItems, setEquipmentItems] = useState<any[]>([]);
+  const [equipmentItems, setEquipmentItems] = useState<EquipmentItem[]>([]);
 
   useEffect(() => {
     let mounted = true;
     (async () => {
-      const payload = await useEquipement();
+      const payload = await fetchEquipement();
       if (mounted && Array.isArray(payload)) setEquipmentItems(payload);
     })();
     return () => {
@@ -24,9 +32,16 @@ const Equipment = () => {
     };
   }, []);
 
-  const categories = ["all", "Outillage", "Multimédia", "Fabrication", "Électronique", "Laboratoire"];
+  const categories = [
+    "all",
+    "Outillage",
+    "Multimédia",
+    "Fabrication",
+    "Électronique",
+    "Laboratoire",
+  ];
 
-  const filteredEquipment = equipmentItems.filter(item => {
+  const filteredEquipment = equipmentItems.filter((item) => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === "all" || item.category === selectedCategory;
     return matchesSearch && matchesCategory;
@@ -35,12 +50,10 @@ const Equipment = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
-            Matériel Disponible
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">Matériel Disponible</h1>
           <Button className="bg-[#00796B] hover:bg-[#00695C]">
             <Plus className="h-4 w-4 mr-2" />
             Demander du matériel
@@ -54,12 +67,10 @@ const Equipment = () => {
               <Filter className="h-4 w-4 mr-2" />
               Filtres
             </h3>
-            
+
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Recherche
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Recherche</label>
                 <div className="relative">
                   <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                   <Input
@@ -72,15 +83,13 @@ const Equipment = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Catégorie
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Catégorie</label>
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00796B]"
                 >
-                  {categories.map(category => (
+                  {categories.map((category) => (
                     <option key={category} value={category}>
                       {category === "all" ? "Toutes catégories" : category}
                     </option>
@@ -113,7 +122,7 @@ const Equipment = () => {
           {/* Equipment Grid */}
           <div className="flex-1">
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filteredEquipment.map(item => (
+              {filteredEquipment.map((item) => (
                 <EquipmentCard key={item.id} equipment={item} />
               ))}
             </div>

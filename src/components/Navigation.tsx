@@ -1,6 +1,19 @@
-
 import { useState } from "react";
-import { Menu, X, Bell, User, Settings, LogOut, Calendar, MessageSquare, FolderOpen, Wrench, FileText, MessageCircle, CalendarDays } from "lucide-react";
+import {
+  Menu,
+  X,
+  Bell,
+  User,
+  Settings,
+  LogOut,
+  Calendar,
+  MessageSquare,
+  FolderOpen,
+  Wrench,
+  FileText,
+  MessageCircle,
+  CalendarDays,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 
@@ -57,36 +70,46 @@ const Navigation = () => {
                   <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full text-xs"></span>
                 </Button>
               </Link>
-              
+
               <div className="relative group">
                 <Button variant="ghost" size="sm">
                   <User className="h-4 w-4" />
                 </Button>
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                  <Link to="/settings" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <Link
+                    to="/settings"
+                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
                     <Settings className="h-4 w-4 mr-2" />
                     Paramètres
                   </Link>
-                  <Link to="/reservations" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <Link
+                    to="/reservations"
+                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
                     <Calendar className="h-4 w-4 mr-2" />
                     Mes réservations
                   </Link>
-                  <Link to="/admin" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <Link
+                    to="/admin"
+                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
                     <Settings className="h-4 w-4 mr-2" />
                     Administration
                   </Link>
                   <div className="border-t my-1"></div>
-                  <Link to="/login" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <Link
+                    to="/login"
+                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
                     <LogOut className="h-4 w-4 mr-2" />
                     Déconnexion
                   </Link>
                 </div>
               </div>
-              
+
               <Link to="/login">
-                <Button className="bg-[#00796B] hover:bg-[#00695C]">
-                  Se connecter
-                </Button>
+                <Button className="bg-[#00796B] hover:bg-[#00695C]">Se connecter</Button>
               </Link>
             </div>
           </div>
@@ -118,21 +141,25 @@ const Navigation = () => {
               ))}
               <div className="flex flex-col space-y-2 pt-2 border-t">
                 <Link to="/reservations" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" className="w-full justify-start border-[#00796B] text-[#00796B]">
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start border-[#00796B] text-[#00796B]"
+                  >
                     <Calendar className="h-4 w-4 mr-2" />
                     Mes réservations
                   </Button>
                 </Link>
                 <Link to="/settings" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" className="w-full justify-start border-[#00796B] text-[#00796B]">
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start border-[#00796B] text-[#00796B]"
+                  >
                     <Settings className="h-4 w-4 mr-2" />
                     Paramètres
                   </Button>
                 </Link>
                 <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button className="w-full bg-[#00796B] hover:bg-[#00695C]">
-                    Se connecter
-                  </Button>
+                  <Button className="w-full bg-[#00796B] hover:bg-[#00695C]">Se connecter</Button>
                 </Link>
               </div>
             </div>

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Calendar, Clock, MapPin, Filter, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,7 +19,7 @@ const Reservations = () => {
       endTime: "17:00",
       location: "Atelier Mécanique - Bâtiment B",
       status: "confirmée",
-      purpose: "Projet de prototypage pour le cours de conception mécanique"
+      purpose: "Projet de prototypage pour le cours de conception mécanique",
     },
     {
       id: 2,
@@ -32,7 +31,7 @@ const Reservations = () => {
       endTime: "18:00",
       location: "Studio Photo - Bâtiment C",
       status: "en_attente",
-      purpose: "Tournage vidéo pour présentation de projet"
+      purpose: "Tournage vidéo pour présentation de projet",
     },
     {
       id: 3,
@@ -44,7 +43,7 @@ const Reservations = () => {
       endTime: "16:00",
       location: "Fab Lab - Bâtiment A",
       status: "terminée",
-      purpose: "Impression de pièces pour robot autonome"
+      purpose: "Impression de pièces pour robot autonome",
     },
     {
       id: 4,
@@ -56,7 +55,7 @@ const Reservations = () => {
       endTime: "12:00",
       location: "Laboratoire Électronique",
       status: "confirmée",
-      purpose: "Analyse de signaux pour projet de filtrage"
+      purpose: "Analyse de signaux pour projet de filtrage",
     },
     {
       id: 5,
@@ -68,28 +67,28 @@ const Reservations = () => {
       endTime: "17:00",
       location: "Salle d'électronique",
       status: "annulée",
-      purpose: "Développement capteur de température"
-    }
+      purpose: "Développement capteur de température",
+    },
   ];
 
   const statusLabels = {
     confirmée: { label: "Confirmée", color: "bg-green-500" },
     en_attente: { label: "En attente", color: "bg-yellow-500" },
     terminée: { label: "Terminée", color: "bg-gray-500" },
-    annulée: { label: "Annulée", color: "bg-red-500" }
+    annulée: { label: "Annulée", color: "bg-red-500" },
   };
 
   const statusOptions = ["all", "confirmée", "en_attente", "terminée", "annulée"];
 
-  const filteredReservations = reservations.filter(reservation => 
-    selectedStatus === "all" || reservation.status === selectedStatus
+  const filteredReservations = reservations.filter(
+    (reservation) => selectedStatus === "all" || reservation.status === selectedStatus
   );
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('fr-FR', {
-      weekday: 'short',
-      day: 'numeric',
-      month: 'short'
+    return new Date(dateString).toLocaleDateString("fr-FR", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
     });
   };
 
@@ -104,37 +103,35 @@ const Reservations = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
-            Mes Réservations
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">Mes Réservations</h1>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white p-4 rounded-lg shadow-sm text-center">
             <div className="text-2xl font-bold text-green-500">
-              {reservations.filter(r => r.status === 'confirmée').length}
+              {reservations.filter((r) => r.status === "confirmée").length}
             </div>
             <div className="text-sm text-gray-600">Confirmées</div>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm text-center">
             <div className="text-2xl font-bold text-yellow-500">
-              {reservations.filter(r => r.status === 'en_attente').length}
+              {reservations.filter((r) => r.status === "en_attente").length}
             </div>
             <div className="text-sm text-gray-600">En attente</div>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm text-center">
             <div className="text-2xl font-bold text-gray-500">
-              {reservations.filter(r => r.status === 'terminée').length}
+              {reservations.filter((r) => r.status === "terminée").length}
             </div>
             <div className="text-sm text-gray-600">Terminées</div>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm text-center">
             <div className="text-2xl font-bold text-red-500">
-              {reservations.filter(r => r.status === 'annulée').length}
+              {reservations.filter((r) => r.status === "annulée").length}
             </div>
             <div className="text-sm text-gray-600">Annulées</div>
           </div>
@@ -150,7 +147,7 @@ const Reservations = () => {
               className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00796B]"
             >
               <option value="all">Toutes les réservations</option>
-              {statusOptions.slice(1).map(status => (
+              {statusOptions.slice(1).map((status) => (
                 <option key={status} value={status}>
                   {getStatusLabel(status)}
                 </option>
@@ -161,7 +158,7 @@ const Reservations = () => {
 
         {/* Reservations List */}
         <div className="space-y-4">
-          {filteredReservations.map(reservation => (
+          {filteredReservations.map((reservation) => (
             <Card key={reservation.id} className="hover:shadow-md transition-shadow">
               <CardHeader>
                 <div className="flex items-start justify-between">
@@ -175,17 +172,17 @@ const Reservations = () => {
                       <CardTitle className="text-xl text-gray-800">
                         {reservation.equipmentName}
                       </CardTitle>
-                      <p className="text-sm text-gray-600 mt-1">
-                        {reservation.purpose}
-                      </p>
+                      <p className="text-sm text-gray-600 mt-1">{reservation.purpose}</p>
                     </div>
                   </div>
-                  <Badge className={`${getStatusColor(reservation.status)} hover:${getStatusColor(reservation.status)}`}>
+                  <Badge
+                    className={`${getStatusColor(reservation.status)} hover:${getStatusColor(reservation.status)}`}
+                  >
                     {getStatusLabel(reservation.status)}
                   </Badge>
                 </div>
               </CardHeader>
-              
+
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                   <div className="flex items-center text-gray-600">
@@ -205,19 +202,23 @@ const Reservations = () => {
                     <span className="text-sm">{reservation.location}</span>
                   </div>
                 </div>
-                
+
                 <div className="flex justify-end space-x-2">
                   <Button variant="outline" size="sm">
                     <Eye className="h-4 w-4 mr-2" />
                     Détails
                   </Button>
-                  {reservation.status === 'confirmée' && (
+                  {reservation.status === "confirmée" && (
                     <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
                       Annuler
                     </Button>
                   )}
-                  {reservation.status === 'en_attente' && (
-                    <Button variant="outline" size="sm" className="text-yellow-600 hover:text-yellow-700">
+                  {reservation.status === "en_attente" && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-yellow-600 hover:text-yellow-700"
+                    >
                       Modifier
                     </Button>
                   )}
@@ -229,12 +230,8 @@ const Reservations = () => {
 
         {filteredReservations.length === 0 && (
           <div className="text-center py-12">
-            <div className="text-gray-500 text-lg mb-4">
-              Aucune réservation trouvée
-            </div>
-            <Button className="bg-[#00796B] hover:bg-[#00695C]">
-              Réserver du matériel
-            </Button>
+            <div className="text-gray-500 text-lg mb-4">Aucune réservation trouvée</div>
+            <Button className="bg-[#00796B] hover:bg-[#00695C]">Réserver du matériel</Button>
           </div>
         )}
       </div>

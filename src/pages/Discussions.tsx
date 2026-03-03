@@ -21,7 +21,7 @@ const Discussions = () => {
       participants: 4,
       unread: 2,
       pinned: true,
-      category: "Matériel"
+      category: "Matériel",
     },
     {
       id: 2,
@@ -31,7 +31,7 @@ const Discussions = () => {
       participants: 8,
       unread: 0,
       pinned: false,
-      category: "Projet"
+      category: "Projet",
     },
     {
       id: 3,
@@ -41,39 +41,42 @@ const Discussions = () => {
       participants: 12,
       unread: 1,
       pinned: false,
-      category: "Réservation"
-    }
+      category: "Réservation",
+    },
   ];
 
   const messages = [
     {
       id: 1,
       author: "Pierre Martin",
-      content: "Bonjour, j'ai un problème avec l'imprimante 3D. Le filament ne sort pas correctement, des idées ?",
+      content:
+        "Bonjour, j'ai un problème avec l'imprimante 3D. Le filament ne sort pas correctement, des idées ?",
       timestamp: "14h32",
-      isOwn: false
+      isOwn: false,
     },
     {
       id: 2,
       author: "Sophie Chen",
-      content: "Salut Pierre ! As-tu vérifié la température de l'extrudeur ? Il faut qu'elle soit à 210°C pour le PLA.",
+      content:
+        "Salut Pierre ! As-tu vérifié la température de l'extrudeur ? Il faut qu'elle soit à 210°C pour le PLA.",
       timestamp: "14h35",
-      isOwn: false
+      isOwn: false,
     },
     {
       id: 3,
       author: "Marie Dubois",
       content: "Exactement ! Et aussi vérifier que le filament n'est pas cassé dans le tube guide.",
       timestamp: "14h38",
-      isOwn: true
+      isOwn: true,
     },
     {
       id: 4,
       author: "Pierre Martin",
-      content: "Merci pour l'aide, j'ai réussi à résoudre le problème ! C'était effectivement la température.",
+      content:
+        "Merci pour l'aide, j'ai réussi à résoudre le problème ! C'était effectivement la température.",
       timestamp: "14h45",
-      isOwn: false
-    }
+      isOwn: false,
+    },
   ];
 
   const handleSendMessage = () => {
@@ -86,11 +89,9 @@ const Discussions = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-foreground mb-8">
-          Discussions
-        </h1>
+        <h1 className="text-3xl font-bold text-foreground mb-8">Discussions</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-200px)]">
           {/* Discussions List */}
@@ -117,7 +118,7 @@ const Discussions = () => {
                     <div
                       key={discussion.id}
                       className={`p-4 border-b cursor-pointer hover:bg-muted/50 transition-colors ${
-                        selectedDiscussion === discussion.id ? 'bg-muted' : ''
+                        selectedDiscussion === discussion.id ? "bg-muted" : ""
                       }`}
                       onClick={() => setSelectedDiscussion(discussion.id)}
                     >
@@ -132,11 +133,11 @@ const Discussions = () => {
                           </Badge>
                         )}
                       </div>
-                      
+
                       <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
                         {discussion.lastMessage}
                       </p>
-                      
+
                       <div className="flex items-center justify-between text-xs text-muted-foreground">
                         <div className="flex items-center space-x-3">
                           <span className="flex items-center">
@@ -165,35 +166,44 @@ const Discussions = () => {
               <Card className="h-full flex flex-col">
                 <CardHeader className="border-b">
                   <CardTitle className="text-lg">
-                    {discussions.find(d => d.id === selectedDiscussion)?.title}
+                    {discussions.find((d) => d.id === selectedDiscussion)?.title}
                   </CardTitle>
                   <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                     <span className="flex items-center">
                       <Users className="h-4 w-4 mr-1" />
-                      {discussions.find(d => d.id === selectedDiscussion)?.participants} participants
+                      {discussions.find((d) => d.id === selectedDiscussion)?.participants}{" "}
+                      participants
                     </span>
                     <Badge variant="outline">
-                      {discussions.find(d => d.id === selectedDiscussion)?.category}
+                      {discussions.find((d) => d.id === selectedDiscussion)?.category}
                     </Badge>
                   </div>
                 </CardHeader>
-                
+
                 {/* Messages */}
                 <CardContent className="flex-1 p-4 overflow-y-auto">
                   <div className="space-y-4">
                     {messages.map((message) => (
-                      <div key={message.id} className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`flex space-x-3 max-w-[70%] ${message.isOwn ? 'flex-row-reverse space-x-reverse' : ''}`}>
+                      <div
+                        key={message.id}
+                        className={`flex ${message.isOwn ? "justify-end" : "justify-start"}`}
+                      >
+                        <div
+                          className={`flex space-x-3 max-w-[70%] ${message.isOwn ? "flex-row-reverse space-x-reverse" : ""}`}
+                        >
                           <Avatar className="h-8 w-8">
                             <AvatarFallback className="text-xs">
-                              {message.author.split(' ').map(n => n[0]).join('')}
+                              {message.author
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
                             </AvatarFallback>
                           </Avatar>
-                          <div className={`rounded-lg p-3 ${
-                            message.isOwn 
-                              ? 'bg-primary text-primary-foreground' 
-                              : 'bg-muted'
-                          }`}>
+                          <div
+                            className={`rounded-lg p-3 ${
+                              message.isOwn ? "bg-primary text-primary-foreground" : "bg-muted"
+                            }`}
+                          >
                             <div className="text-xs font-medium mb-1 opacity-80">
                               {message.author}
                             </div>
@@ -205,7 +215,7 @@ const Discussions = () => {
                     ))}
                   </div>
                 </CardContent>
-                
+
                 {/* Message Input */}
                 <div className="border-t p-4">
                   <div className="flex space-x-2">
@@ -215,7 +225,7 @@ const Discussions = () => {
                       onChange={(e) => setNewMessage(e.target.value)}
                       className="min-h-[40px] max-h-32"
                       onKeyDown={(e) => {
-                        if (e.key === 'Enter' && !e.shiftKey) {
+                        if (e.key === "Enter" && !e.shiftKey) {
                           e.preventDefault();
                           handleSendMessage();
                         }

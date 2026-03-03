@@ -1,1 +1,1 @@
-export type ToasterProps = React.ComponentProps<typeof import("sonner").Toaster>
+export type ToasterProps = React.ComponentProps<typeof import("sonner").Toaster>;

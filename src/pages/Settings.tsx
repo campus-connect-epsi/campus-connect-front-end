@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { User, Lock, Bell, Eye, Save, Edit, BarChart3, Calendar, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,7 +16,7 @@ const Settings = () => {
     studentId: "20240001",
     department: "Génie Environnemental",
     phone: "+33 6 12 34 56 78",
-    bio: "Étudiante passionnée par l'innovation durable et les technologies vertes."
+    bio: "Étudiante passionnée par l'innovation durable et les technologies vertes.",
   });
 
   const [notifications, setNotifications] = useState({
@@ -26,20 +25,20 @@ const Settings = () => {
     emailForum: false,
     pushReservations: true,
     pushMessages: true,
-    pushEvents: true
+    pushEvents: true,
   });
 
   const handleProfileChange = (field: string, value: string) => {
-    setProfileData(prev => ({
+    setProfileData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleNotificationChange = (setting: string, value: boolean) => {
-    setNotifications(prev => ({
+    setNotifications((prev) => ({
       ...prev,
-      [setting]: value
+      [setting]: value,
     }));
   };
 
@@ -60,17 +59,15 @@ const Settings = () => {
     { id: "privacy", label: "Confidentialité", icon: Eye },
     { id: "performance", label: "Performance", icon: BarChart3 },
     { id: "schedule", label: "Emploi du temps", icon: Calendar },
-    { id: "documents", label: "Documents", icon: FileText }
+    { id: "documents", label: "Documents", icon: FileText },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      
+
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">
-          Paramètres
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-8">Paramètres</h1>
 
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar */}
@@ -128,7 +125,7 @@ const Settings = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="email">Email</Label>
                     <Input
@@ -138,7 +135,7 @@ const Settings = () => {
                       onChange={(e) => handleProfileChange("email", e.target.value)}
                     />
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="studentId">Numéro étudiant</Label>
@@ -164,7 +161,7 @@ const Settings = () => {
                       </select>
                     </div>
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="phone">Téléphone</Label>
                     <Input
@@ -173,7 +170,7 @@ const Settings = () => {
                       onChange={(e) => handleProfileChange("phone", e.target.value)}
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="bio">Bio</Label>
                     <textarea
@@ -184,7 +181,7 @@ const Settings = () => {
                       rows={3}
                     />
                   </div>
-                  
+
                   <Button className="bg-[#00796B] hover:bg-[#00695C]">
                     <Save className="h-4 w-4 mr-2" />
                     Sauvegarder
@@ -223,14 +220,16 @@ const Settings = () => {
                       </Button>
                     </div>
                   </div>
-                  
+
                   <div className="border-t pt-6">
                     <h3 className="text-lg font-semibold mb-4">Sessions actives</h3>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-md">
                         <div>
                           <div className="font-medium">Session actuelle</div>
-                          <div className="text-sm text-gray-600">Chrome sur Windows • Paris, France</div>
+                          <div className="text-sm text-gray-600">
+                            Chrome sur Windows • Paris, France
+                          </div>
                         </div>
                         <div className="text-sm text-green-600">Actif maintenant</div>
                       </div>
@@ -256,11 +255,15 @@ const Settings = () => {
                       <div className="flex items-center justify-between">
                         <div>
                           <div className="font-medium">Réservations</div>
-                          <div className="text-sm text-gray-600">Confirmations et rappels de réservation</div>
+                          <div className="text-sm text-gray-600">
+                            Confirmations et rappels de réservation
+                          </div>
                         </div>
                         <Switch
                           checked={notifications.emailReservations}
-                          onCheckedChange={(value) => handleNotificationChange("emailReservations", value)}
+                          onCheckedChange={(value) =>
+                            handleNotificationChange("emailReservations", value)
+                          }
                         />
                       </div>
                       <div className="flex items-center justify-between">
@@ -270,7 +273,9 @@ const Settings = () => {
                         </div>
                         <Switch
                           checked={notifications.emailMessages}
-                          onCheckedChange={(value) => handleNotificationChange("emailMessages", value)}
+                          onCheckedChange={(value) =>
+                            handleNotificationChange("emailMessages", value)
+                          }
                         />
                       </div>
                       <div className="flex items-center justify-between">
@@ -285,7 +290,7 @@ const Settings = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="border-t pt-6">
                     <h3 className="text-lg font-semibold mb-4">Notifications push</h3>
                     <div className="space-y-4">
@@ -296,7 +301,9 @@ const Settings = () => {
                         </div>
                         <Switch
                           checked={notifications.pushReservations}
-                          onCheckedChange={(value) => handleNotificationChange("pushReservations", value)}
+                          onCheckedChange={(value) =>
+                            handleNotificationChange("pushReservations", value)
+                          }
                         />
                       </div>
                       <div className="flex items-center justify-between">
@@ -306,7 +313,9 @@ const Settings = () => {
                         </div>
                         <Switch
                           checked={notifications.pushMessages}
-                          onCheckedChange={(value) => handleNotificationChange("pushMessages", value)}
+                          onCheckedChange={(value) =>
+                            handleNotificationChange("pushMessages", value)
+                          }
                         />
                       </div>
                       <div className="flex items-center justify-between">
@@ -321,7 +330,7 @@ const Settings = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <Button className="bg-[#00796B] hover:bg-[#00695C]">
                     <Save className="h-4 w-4 mr-2" />
                     Sauvegarder les préférences
@@ -346,34 +355,43 @@ const Settings = () => {
                       <div className="flex items-center justify-between">
                         <div>
                           <div className="font-medium">Profil public</div>
-                          <div className="text-sm text-gray-600">Autres étudiants peuvent voir votre profil</div>
+                          <div className="text-sm text-gray-600">
+                            Autres étudiants peuvent voir votre profil
+                          </div>
                         </div>
                         <Switch defaultChecked />
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
                           <div className="font-medium">Afficher l'email</div>
-                          <div className="text-sm text-gray-600">Votre email est visible sur votre profil</div>
+                          <div className="text-sm text-gray-600">
+                            Votre email est visible sur votre profil
+                          </div>
                         </div>
                         <Switch />
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
                           <div className="font-medium">Afficher le téléphone</div>
-                          <div className="text-sm text-gray-600">Votre numéro est visible sur votre profil</div>
+                          <div className="text-sm text-gray-600">
+                            Votre numéro est visible sur votre profil
+                          </div>
                         </div>
                         <Switch />
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="border-t pt-6">
                     <h3 className="text-lg font-semibold mb-4">Données et confidentialité</h3>
                     <div className="space-y-3">
                       <Button variant="outline" className="w-full justify-start">
                         Télécharger mes données
                       </Button>
-                      <Button variant="outline" className="w-full justify-start text-red-600 hover:text-red-700">
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start text-red-600 hover:text-red-700"
+                      >
                         Supprimer mon compte
                       </Button>
                     </div>
@@ -412,28 +430,37 @@ const Settings = () => {
                       </CardContent>
                     </Card>
                   </div>
-                  
+
                   <div className="h-64 bg-muted rounded-lg p-4">
                     <h3 className="text-lg font-semibold mb-4">Utilisation des ressources (24h)</h3>
                     <div className="space-y-4">
                       <div className="flex justify-between items-center">
                         <span className="text-sm">CPU</span>
                         <div className="w-32 bg-background rounded-full h-2">
-                          <div className="bg-primary h-2 rounded-full" style={{width: '65%'}}></div>
+                          <div
+                            className="bg-primary h-2 rounded-full"
+                            style={{ width: "65%" }}
+                          ></div>
                         </div>
                         <span className="text-sm font-medium">65%</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-sm">Mémoire</span>
                         <div className="w-32 bg-background rounded-full h-2">
-                          <div className="bg-secondary h-2 rounded-full" style={{width: '70%'}}></div>
+                          <div
+                            className="bg-secondary h-2 rounded-full"
+                            style={{ width: "70%" }}
+                          ></div>
                         </div>
                         <span className="text-sm font-medium">70%</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-sm">Disque</span>
                         <div className="w-32 bg-background rounded-full h-2">
-                          <div className="bg-accent h-2 rounded-full" style={{width: '40%'}}></div>
+                          <div
+                            className="bg-accent h-2 rounded-full"
+                            style={{ width: "40%" }}
+                          ></div>
                         </div>
                         <span className="text-sm font-medium">40%</span>
                       </div>
@@ -456,33 +483,43 @@ const Settings = () => {
                   <div className="grid grid-cols-1 gap-4">
                     {/* Week navigation */}
                     <div className="flex items-center justify-between mb-4">
-                      <Button variant="outline" size="sm">Semaine précédente</Button>
+                      <Button variant="outline" size="sm">
+                        Semaine précédente
+                      </Button>
                       <h3 className="font-semibold">Semaine du 1-7 Juillet 2024</h3>
-                      <Button variant="outline" size="sm">Semaine suivante</Button>
+                      <Button variant="outline" size="sm">
+                        Semaine suivante
+                      </Button>
                     </div>
-                    
+
                     {/* Schedule grid */}
                     <div className="grid grid-cols-7 gap-2 mb-4">
-                      {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((day, index) => (
+                      {["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((day, index) => (
                         <div key={day} className="text-center font-medium p-2 bg-muted rounded">
                           {day}
                         </div>
                       ))}
                     </div>
-                    
+
                     {/* Sample schedule events */}
                     <div className="space-y-2">
                       <div className="p-3 bg-primary/10 rounded-md border-l-4 border-primary">
                         <div className="font-medium">Cours Génie Environnemental</div>
-                        <div className="text-sm text-muted-foreground">Lundi 8h00 - 10h00 • Amphi A</div>
+                        <div className="text-sm text-muted-foreground">
+                          Lundi 8h00 - 10h00 • Amphi A
+                        </div>
                       </div>
                       <div className="p-3 bg-secondary/10 rounded-md border-l-4 border-secondary">
                         <div className="font-medium">TP Laboratoire</div>
-                        <div className="text-sm text-muted-foreground">Mercredi 14h00 - 17h00 • Lab 203</div>
+                        <div className="text-sm text-muted-foreground">
+                          Mercredi 14h00 - 17h00 • Lab 203
+                        </div>
                       </div>
                       <div className="p-3 bg-accent/10 rounded-md border-l-4 border-accent">
                         <div className="font-medium">Projet Recherche</div>
-                        <div className="text-sm text-muted-foreground">Vendredi 9h00 - 12h00 • Salle projet</div>
+                        <div className="text-sm text-muted-foreground">
+                          Vendredi 9h00 - 12h00 • Salle projet
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -499,21 +536,27 @@ const Settings = () => {
                       <FileText className="h-5 w-5 mr-2" />
                       Gestion des documents
                     </div>
-                    <Button className="bg-primary hover:bg-primary/90">
-                      Nouveau document
-                    </Button>
+                    <Button className="bg-primary hover:bg-primary/90">Nouveau document</Button>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {/* Document categories */}
                     <div className="flex space-x-2 mb-4">
-                      <Button variant="outline" size="sm">Tous</Button>
-                      <Button variant="outline" size="sm">Personnels</Button>
-                      <Button variant="outline" size="sm">Partagés</Button>
-                      <Button variant="outline" size="sm">Projets</Button>
+                      <Button variant="outline" size="sm">
+                        Tous
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        Personnels
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        Partagés
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        Projets
+                      </Button>
                     </div>
-                    
+
                     {/* Documents list */}
                     <div className="space-y-3">
                       <div className="flex items-center justify-between p-3 border rounded-md hover:bg-muted/50">
@@ -521,50 +564,70 @@ const Settings = () => {
                           <FileText className="h-5 w-5 text-muted-foreground" />
                           <div>
                             <div className="font-medium">Rapport Projet Durable.pdf</div>
-                            <div className="text-sm text-muted-foreground">Personnel • 2.4 MB • Il y a 2 jours</div>
+                            <div className="text-sm text-muted-foreground">
+                              Personnel • 2.4 MB • Il y a 2 jours
+                            </div>
                           </div>
                         </div>
                         <div className="flex space-x-2">
-                          <Button variant="outline" size="sm">Voir</Button>
-                          <Button variant="outline" size="sm">Partager</Button>
+                          <Button variant="outline" size="sm">
+                            Voir
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            Partager
+                          </Button>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center justify-between p-3 border rounded-md hover:bg-muted/50">
                         <div className="flex items-center space-x-3">
                           <FileText className="h-5 w-5 text-muted-foreground" />
                           <div>
                             <div className="font-medium">Guide_Utilisation_Materiel.docx</div>
-                            <div className="text-sm text-muted-foreground">Partagé • 1.8 MB • Il y a 5 jours</div>
+                            <div className="text-sm text-muted-foreground">
+                              Partagé • 1.8 MB • Il y a 5 jours
+                            </div>
                           </div>
                         </div>
                         <div className="flex space-x-2">
-                          <Button variant="outline" size="sm">Voir</Button>
-                          <Button variant="outline" size="sm">Télécharger</Button>
+                          <Button variant="outline" size="sm">
+                            Voir
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            Télécharger
+                          </Button>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center justify-between p-3 border rounded-md hover:bg-muted/50">
                         <div className="flex items-center space-x-3">
                           <FileText className="h-5 w-5 text-muted-foreground" />
                           <div>
                             <div className="font-medium">Photos_Atelier_3D.zip</div>
-                            <div className="text-sm text-muted-foreground">Projet • 15.2 MB • Il y a 1 semaine</div>
+                            <div className="text-sm text-muted-foreground">
+                              Projet • 15.2 MB • Il y a 1 semaine
+                            </div>
                           </div>
                         </div>
                         <div className="flex space-x-2">
-                          <Button variant="outline" size="sm">Voir</Button>
-                          <Button variant="outline" size="sm">Modifier</Button>
+                          <Button variant="outline" size="sm">
+                            Voir
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            Modifier
+                          </Button>
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* Upload area */}
                     <div className="mt-6 p-6 border-2 border-dashed border-muted-foreground/25 rounded-md text-center">
                       <FileText className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                       <p className="text-sm text-muted-foreground">
-                        Glissez-déposez vos fichiers ici ou 
-                        <Button variant="link" className="p-0 h-auto ml-1">parcourez</Button>
+                        Glissez-déposez vos fichiers ici ou
+                        <Button variant="link" className="p-0 h-auto ml-1">
+                          parcourez
+                        </Button>
                       </p>
                     </div>
                   </div>

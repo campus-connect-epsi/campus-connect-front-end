@@ -1,3 +1,3 @@
-import type { DayPicker } from "react-day-picker"
+import type { DayPicker } from "react-day-picker";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>
+export type CalendarProps = React.ComponentProps<typeof DayPicker>;

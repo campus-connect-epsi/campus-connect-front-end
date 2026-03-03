@@ -6,55 +6,61 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 
 const NewDiscussion = () => {
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     title: "",
     category: "",
     content: "",
     tags: [] as string[],
-    newTag: ""
+    newTag: "",
   });
 
-  const categories = [
-    "Matériel",
-    "Projet", 
-    "Réservation",
-    "Technique",
-    "Général"
-  ];
+  const categories = ["Matériel", "Projet", "Réservation", "Technique", "Général"];
 
   const popularTags = [
-    "imprimante-3d", "arduino", "raspberry-pi", "electronique", 
-    "menuiserie", "soudure", "programmation", "aide"
+    "imprimante-3d",
+    "arduino",
+    "raspberry-pi",
+    "electronique",
+    "menuiserie",
+    "soudure",
+    "programmation",
+    "aide",
   ];
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const addTag = (tag: string) => {
     if (tag && !formData.tags.includes(tag)) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         tags: [...prev.tags, tag],
-        newTag: ""
+        newTag: "",
       }));
     }
   };
 
   const removeTag = (tagToRemove: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove)
+      tags: prev.tags.filter((tag) => tag !== tagToRemove),
     }));
   };
 
@@ -72,10 +78,13 @@ const NewDiscussion = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6">
-          <Link to="/discussions" className="flex items-center text-muted-foreground hover:text-foreground">
+          <Link
+            to="/discussions"
+            className="flex items-center text-muted-foreground hover:text-foreground"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Retour aux discussions
           </Link>
@@ -106,7 +115,10 @@ const NewDiscussion = () => {
                 {/* Category */}
                 <div>
                   <Label htmlFor="category">Catégorie</Label>
-                  <Select value={formData.category} onValueChange={(value) => handleInputChange("category", value)}>
+                  <Select
+                    value={formData.category}
+                    onValueChange={(value) => handleInputChange("category", value)}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Sélectionnez une catégorie" />
                     </SelectTrigger>
@@ -152,7 +164,7 @@ const NewDiscussion = () => {
                         ))}
                       </div>
                     )}
-                    
+
                     {/* Add Custom Tag */}
                     <div className="flex space-x-2">
                       <Input
@@ -160,7 +172,7 @@ const NewDiscussion = () => {
                         value={formData.newTag}
                         onChange={(e) => handleInputChange("newTag", e.target.value)}
                         onKeyPress={(e) => {
-                          if (e.key === 'Enter') {
+                          if (e.key === "Enter") {
                             e.preventDefault();
                             addTag(formData.newTag);
                           }
@@ -212,18 +224,14 @@ const NewDiscussion = () => {
 
                 {/* Actions */}
                 <div className="flex space-x-4">
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     className="flex-1 bg-primary hover:bg-primary/90"
                     disabled={!isFormValid()}
                   >
                     Publier la discussion
                   </Button>
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={() => navigate(-1)}
-                  >
+                  <Button type="button" variant="outline" onClick={() => navigate(-1)}>
                     Annuler
                   </Button>
                 </div>

@@ -6,12 +6,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import Navigation from "@/components/Navigation";
 
 const NewEvent = () => {
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -21,22 +27,15 @@ const NewEvent = () => {
     location: "",
     maxParticipants: "",
     category: "",
-    isPublic: true
+    isPublic: true,
   });
 
-  const categories = [
-    "Workshop",
-    "Conférence",
-    "Formation",
-    "Hackathon",
-    "Networking",
-    "Autre"
-  ];
+  const categories = ["Workshop", "Conférence", "Formation", "Hackathon", "Networking", "Autre"];
 
   const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -48,22 +47,27 @@ const NewEvent = () => {
   };
 
   const isFormValid = () => {
-    return formData.title.trim() && 
-           formData.description.trim() && 
-           formData.date && 
-           formData.startTime && 
-           formData.endTime && 
-           formData.location.trim() &&
-           formData.category;
+    return (
+      formData.title.trim() &&
+      formData.description.trim() &&
+      formData.date &&
+      formData.startTime &&
+      formData.endTime &&
+      formData.location.trim() &&
+      formData.category
+    );
   };
 
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6">
-          <Link to="/events" className="flex items-center text-muted-foreground hover:text-foreground">
+          <Link
+            to="/events"
+            className="flex items-center text-muted-foreground hover:text-foreground"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Retour aux événements
           </Link>
@@ -94,7 +98,10 @@ const NewEvent = () => {
                 {/* Category */}
                 <div>
                   <Label htmlFor="category">Type d'événement</Label>
-                  <Select value={formData.category} onValueChange={(value) => handleInputChange("category", value)}>
+                  <Select
+                    value={formData.category}
+                    onValueChange={(value) => handleInputChange("category", value)}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Sélectionnez un type" />
                     </SelectTrigger>
@@ -130,7 +137,7 @@ const NewEvent = () => {
                       type="date"
                       value={formData.date}
                       onChange={(e) => handleInputChange("date", e.target.value)}
-                      min={new Date().toISOString().split('T')[0]}
+                      min={new Date().toISOString().split("T")[0]}
                       required
                     />
                   </div>
@@ -170,7 +177,9 @@ const NewEvent = () => {
 
                 {/* Max Participants */}
                 <div>
-                  <Label htmlFor="maxParticipants">Nombre maximum de participants (optionnel)</Label>
+                  <Label htmlFor="maxParticipants">
+                    Nombre maximum de participants (optionnel)
+                  </Label>
                   <Input
                     id="maxParticipants"
                     type="number"
@@ -187,8 +196,10 @@ const NewEvent = () => {
                   <div className="border-2 border-dashed border-muted-foreground/25 rounded-md p-6 text-center">
                     <Image className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                     <p className="text-sm text-muted-foreground">
-                      Glissez-déposez une image ou 
-                      <Button variant="link" className="p-0 h-auto ml-1">parcourez</Button>
+                      Glissez-déposez une image ou
+                      <Button variant="link" className="p-0 h-auto ml-1">
+                        parcourez
+                      </Button>
                     </p>
                   </div>
                 </div>
@@ -236,7 +247,7 @@ const NewEvent = () => {
                         <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                           <Calendar className="h-4 w-4" />
                           <span>
-                            {new Date(formData.date).toLocaleDateString('fr-FR')}
+                            {new Date(formData.date).toLocaleDateString("fr-FR")}
                             {formData.startTime && ` • ${formData.startTime}`}
                             {formData.endTime && ` - ${formData.endTime}`}
                           </span>
@@ -254,18 +265,14 @@ const NewEvent = () => {
 
                 {/* Actions */}
                 <div className="flex space-x-4">
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     className="flex-1 bg-primary hover:bg-primary/90"
                     disabled={!isFormValid()}
                   >
                     Proposer l'événement
                   </Button>
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={() => navigate(-1)}
-                  >
+                  <Button type="button" variant="outline" onClick={() => navigate(-1)}>
                     Annuler
                   </Button>
                 </div>

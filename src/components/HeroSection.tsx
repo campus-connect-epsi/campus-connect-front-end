@@ -1,4 +1,3 @@
-
 import { Search, Calendar, MessageCircle, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,15 +7,13 @@ const HeroSection = () => {
     <section className="bg-gradient-to-br from-[#00796B] to-[#00695C] text-white py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Campus Connect
-          </h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">Campus Connect</h1>
           <p className="text-xl md:text-2xl mb-8 text-green-100">
             Votre matériel, vos projets, votre avenir
           </p>
           <p className="text-lg mb-10 text-green-100 max-w-2xl mx-auto">
-            Plateforme collaborative pour étudiants : partagez du matériel, 
-            collaborez sur des projets et construisez votre réseau universitaire.
+            Plateforme collaborative pour étudiants : partagez du matériel, collaborez sur des
+            projets et construisez votre réseau universitaire.
           </p>
 
           {/* Quick Search */}
@@ -37,19 +34,31 @@ const HeroSection = () => {
 
           {/* Quick Actions */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
-            <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-[#00796B] h-auto py-4 flex flex-col items-center">
+            <Button
+              variant="outline"
+              className="bg-transparent border-white text-white hover:bg-white hover:text-[#00796B] h-auto py-4 flex flex-col items-center"
+            >
               <Calendar className="h-6 w-6 mb-2" />
               <span className="text-sm">Réserver</span>
             </Button>
-            <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-[#00796B] h-auto py-4 flex flex-col items-center">
+            <Button
+              variant="outline"
+              className="bg-transparent border-white text-white hover:bg-white hover:text-[#00796B] h-auto py-4 flex flex-col items-center"
+            >
               <MessageCircle className="h-6 w-6 mb-2" />
               <span className="text-sm">Forum</span>
             </Button>
-            <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-[#00796B] h-auto py-4 flex flex-col items-center">
+            <Button
+              variant="outline"
+              className="bg-transparent border-white text-white hover:bg-white hover:text-[#00796B] h-auto py-4 flex flex-col items-center"
+            >
               <Share2 className="h-6 w-6 mb-2" />
               <span className="text-sm">Partager</span>
             </Button>
-            <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-[#00796B] h-auto py-4 flex flex-col items-center">
+            <Button
+              variant="outline"
+              className="bg-transparent border-white text-white hover:bg-white hover:text-[#00796B] h-auto py-4 flex flex-col items-center"
+            >
               <Calendar className="h-6 w-6 mb-2" />
               <span className="text-sm">Événements</span>
             </Button>

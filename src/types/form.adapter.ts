@@ -1,3 +1,3 @@
 export type FormItemContextValue = {
-  id: string
-}
+  id: string;
+};

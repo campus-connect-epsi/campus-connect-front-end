@@ -31,6 +31,7 @@ Assurez-vous d'avoir installé [Node.js](https://nodejs.org/) (version 18.x ou s
 ### Installation
 
 1. Clonez le dépôt :
+
    ```bash
    git clone git@github.com:campus-connect-epsi/campus-connect-front-end.git
    cd campus-connect-front-end
@@ -44,14 +45,17 @@ Assurez-vous d'avoir installé [Node.js](https://nodejs.org/) (version 18.x ou s
 ### Développement
 
 Lancez le serveur de développement avec rechargement à chaud :
+
 ```bash
 npm run dev
 ```
+
 L'application sera accessible sur `http://localhost:8080`.
 
 ### Build pour la Production
 
 Générez les fichiers optimisés pour la production dans le dossier `dist` :
+
 ```bash
 npm run build
 ```
@@ -69,4 +73,5 @@ src/
 ```
 
 ---
+
 Développé avec ❤️ pour la communauté étudiante.

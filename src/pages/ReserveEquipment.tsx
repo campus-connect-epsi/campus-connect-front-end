@@ -12,14 +12,14 @@ import Navigation from "@/components/Navigation";
 const ReserveEquipment = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     startDate: "",
     endDate: "",
     startTime: "",
     endTime: "",
     purpose: "",
-    location: ""
+    location: "",
   });
 
   // Mock equipment data
@@ -29,13 +29,13 @@ const ReserveEquipment = () => {
     category: "Outillage",
     status: "Disponible",
     location: "Atelier Mécanique - Étagère B3",
-    owner: "MyDIL - Campus Connect"
+    owner: "MyDIL - Campus Connect",
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -47,16 +47,25 @@ const ReserveEquipment = () => {
   };
 
   const isFormValid = () => {
-    return formData.startDate && formData.endDate && formData.startTime && formData.endTime && formData.purpose;
+    return (
+      formData.startDate &&
+      formData.endDate &&
+      formData.startTime &&
+      formData.endTime &&
+      formData.purpose
+    );
   };
 
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6">
-          <Link to={`/equipment/${id}`} className="flex items-center text-muted-foreground hover:text-foreground">
+          <Link
+            to={`/equipment/${id}`}
+            className="flex items-center text-muted-foreground hover:text-foreground"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Retour au détail
           </Link>
@@ -83,7 +92,7 @@ const ReserveEquipment = () => {
                         type="date"
                         value={formData.startDate}
                         onChange={(e) => handleInputChange("startDate", e.target.value)}
-                        min={new Date().toISOString().split('T')[0]}
+                        min={new Date().toISOString().split("T")[0]}
                         required
                       />
                     </div>
@@ -94,7 +103,7 @@ const ReserveEquipment = () => {
                         type="date"
                         value={formData.endDate}
                         onChange={(e) => handleInputChange("endDate", e.target.value)}
-                        min={formData.startDate || new Date().toISOString().split('T')[0]}
+                        min={formData.startDate || new Date().toISOString().split("T")[0]}
                         required
                       />
                     </div>
@@ -160,18 +169,14 @@ const ReserveEquipment = () => {
                   </div>
 
                   <div className="flex space-x-4">
-                    <Button 
-                      type="submit" 
+                    <Button
+                      type="submit"
                       className="flex-1 bg-primary hover:bg-primary/90"
                       disabled={!isFormValid()}
                     >
                       Confirmer la réservation
                     </Button>
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      onClick={() => navigate(-1)}
-                    >
+                    <Button type="button" variant="outline" onClick={() => navigate(-1)}>
                       Annuler
                     </Button>
                   </div>
@@ -213,14 +218,16 @@ const ReserveEquipment = () => {
                       <div className="flex items-center space-x-2">
                         <Calendar className="h-4 w-4" />
                         <span>
-                          Du {new Date(formData.startDate).toLocaleDateString('fr-FR')} 
-                          au {new Date(formData.endDate).toLocaleDateString('fr-FR')}
+                          Du {new Date(formData.startDate).toLocaleDateString("fr-FR")}
+                          au {new Date(formData.endDate).toLocaleDateString("fr-FR")}
                         </span>
                       </div>
                       {formData.startTime && formData.endTime && (
                         <div className="flex items-center space-x-2">
                           <Clock className="h-4 w-4" />
-                          <span>De {formData.startTime} à {formData.endTime}</span>
+                          <span>
+                            De {formData.startTime} à {formData.endTime}
+                          </span>
                         </div>
                       )}
                     </div>

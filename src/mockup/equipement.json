@@ -1,61 +1,60 @@
-
 {
-	"status": "success",
-	"message": "Opération réussie",
-	"payload": [
-		{
-			"id": 1,
-			"name": "Perceuse électrique BOSCH",
-			"category": "Outillage",
-			"status": "Disponible",
-			"image": "/equipement/Perceuse-electrique-BOSCH.png",
-			"description": "Perceuse électrique professionnelle avec accessoires",
-			"rating": 4.8
-		},
-		{
-			"id": 2,
-			"name": "Caméra DSLR Canon",
-			"category": "Multimédia",
-			"status": "Réservé",
-			"image": "/equipement/Camera-DSLR-Canon.png",
-			"description": "Caméra haute résolution pour projets créatifs",
-			"rating": 4.9
-		},
-		{
-			"id": 3,
-			"name": "Imprimante 3D Prusa",
-			"category": "Fabrication",
-			"status": "Disponible",
-			"image": "/equipement/Imprimante-3D-Prusa.png",
-			"description": "Imprimante 3D pour prototypage",
-			"rating": 4.7
-		},
-		{
-			"id": 4,
-			"name": "Oscilloscope numérique",
-			"category": "Électronique",
-			"status": "Disponible",
-			"image": "/equipement/Oscilloscope-numerique.png",
-			"description": "Oscilloscope 4 canaux pour mesures électroniques",
-			"rating": 4.6
-		},
-		{
-			"id": 5,
-			"name": "Microscope optique",
-			"category": "Laboratoire",
-			"status": "En maintenance",
-			"image": "/equipement/Microscope-optique.png",
-			"description": "Microscope binoculaire avec éclairage LED",
-			"rating": 4.5
-		},
-		{
-			"id": 6,
-			"name": "Kit Arduino Uno",
-			"category": "Électronique",
-			"status": "Disponible",
-			"image": "/equipement/Kit-Arduino-Uno.png",
-			"description": "Kit complet avec capteurs et composants",
-			"rating": 4.9
-		}
-	]
+  "status": "success",
+  "message": "Opération réussie",
+  "payload": [
+    {
+      "id": 1,
+      "name": "Perceuse électrique BOSCH",
+      "category": "Outillage",
+      "status": "Disponible",
+      "image": "/equipement/Perceuse-electrique-BOSCH.png",
+      "description": "Perceuse électrique professionnelle avec accessoires",
+      "rating": 4.8
+    },
+    {
+      "id": 2,
+      "name": "Caméra DSLR Canon",
+      "category": "Multimédia",
+      "status": "Réservé",
+      "image": "/equipement/Camera-DSLR-Canon.png",
+      "description": "Caméra haute résolution pour projets créatifs",
+      "rating": 4.9
+    },
+    {
+      "id": 3,
+      "name": "Imprimante 3D Prusa",
+      "category": "Fabrication",
+      "status": "Disponible",
+      "image": "/equipement/Imprimante-3D-Prusa.png",
+      "description": "Imprimante 3D pour prototypage",
+      "rating": 4.7
+    },
+    {
+      "id": 4,
+      "name": "Oscilloscope numérique",
+      "category": "Électronique",
+      "status": "Disponible",
+      "image": "/equipement/Oscilloscope-numerique.png",
+      "description": "Oscilloscope 4 canaux pour mesures électroniques",
+      "rating": 4.6
+    },
+    {
+      "id": 5,
+      "name": "Microscope optique",
+      "category": "Laboratoire",
+      "status": "En maintenance",
+      "image": "/equipement/Microscope-optique.png",
+      "description": "Microscope binoculaire avec éclairage LED",
+      "rating": 4.5
+    },
+    {
+      "id": 6,
+      "name": "Kit Arduino Uno",
+      "category": "Électronique",
+      "status": "Disponible",
+      "image": "/equipement/Kit-Arduino-Uno.png",
+      "description": "Kit complet avec capteurs et composants",
+      "rating": 4.9
+    }
+  ]
 }
