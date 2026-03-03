@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Menu,
   X,
@@ -16,10 +16,30 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
+import { useSettings, AppSettings } from "@/hooks/use-settings";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { settings } = useSettings();
+  const [enabledSections, setEnabledSections] = useState(settings.enabledSections);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleSettingsUpdate = () => {
+      const saved = localStorage.getItem("campus-connect-settings");
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          setEnabledSections(parsed.enabledSections);
+        } catch (e) {
+          console.error("Failed to parse settings", e);
+        }
+      }
+    };
+
+    window.addEventListener("settings-updated", handleSettingsUpdate);
+    return () => window.removeEventListener("settings-updated", handleSettingsUpdate);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -27,15 +47,19 @@ const Navigation = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
-  const navLinks = [
-    { path: "/equipment", label: "Matériel", icon: Wrench },
-    { path: "/projects", label: "Projets", icon: FolderOpen },
-    { path: "/forum", label: "Forum", icon: MessageSquare },
-    { path: "/events", label: "Événements", icon: Calendar },
-    { path: "/schedule", label: "Emploi du Temps", icon: CalendarDays },
-    { path: "/documents", label: "Documents", icon: FileText },
-    { path: "/discussions", label: "Discussions", icon: MessageCircle },
+  const allNavLinks = [
+    { path: "/equipment", label: "Matériel", icon: Wrench, key: "equipment" },
+    { path: "/projects", label: "Projets", icon: FolderOpen, key: "projects" },
+    { path: "/forum", label: "Forum", icon: MessageSquare, key: "forum" },
+    { path: "/events", label: "Événements", icon: Calendar, key: "events" },
+    { path: "/schedule", label: "Emploi du Temps", icon: CalendarDays, key: "schedule" },
+    { path: "/documents", label: "Documents", icon: FileText, key: "documents" },
+    { path: "/discussions", label: "Discussions", icon: MessageCircle, key: "discussions" },
   ];
+
+  const navLinks = allNavLinks.filter(
+    (link) => enabledSections[link.key as keyof AppSettings["enabledSections"]]
+  );
 
   return (
     <nav className="bg-white shadow-sm border-b">
