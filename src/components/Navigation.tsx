@@ -45,7 +45,10 @@ const Navigation = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => {
+    if (path === "/") return location.pathname === "/";
+    return location.pathname.startsWith(path);
+  };
 
   const allNavLinks = [
     { path: "/equipment", label: "Matériel", icon: Wrench, key: "equipment" },
@@ -79,12 +82,15 @@ const Navigation = () => {
               <Link
                 key={path}
                 to={path}
-                className={`flex items-center text-gray-700 hover:text-[#00796B] transition-colors ${
+                className={`relative flex items-center h-16 text-gray-700 hover:text-[#00796B] transition-colors ${
                   isActive(path) ? "text-[#00796B] font-semibold" : ""
                 }`}
               >
                 <Icon className="h-4 w-4 mr-1" />
                 {label}
+                {isActive(path) && (
+                  <span className="absolute bottom-0 left-0 h-0.5 w-full bg-[#00796B] rounded-t-full"></span>
+                )}
               </Link>
             ))}
             <div className="flex items-center space-x-4">
@@ -149,21 +155,23 @@ const Navigation = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden pb-4">
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-1">
               {navLinks.map(({ path, label, icon: Icon }) => (
                 <Link
                   key={path}
                   to={path}
-                  className={`flex items-center text-gray-700 hover:text-[#00796B] transition-colors ${
-                    isActive(path) ? "text-[#00796B] font-semibold" : ""
+                  className={`flex items-center px-4 py-3 text-gray-700 hover:text-[#00796B] hover:bg-gray-50 transition-colors border-l-4 ${
+                    isActive(path)
+                      ? "text-[#00796B] font-semibold bg-[#00796B]/5 border-[#00796B]"
+                      : "border-transparent"
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <Icon className="h-4 w-4 mr-2" />
+                  <Icon className="h-5 w-5 mr-3" />
                   {label}
                 </Link>
               ))}
-              <div className="flex flex-col space-y-2 pt-2 border-t">
+              <div className="flex flex-col space-y-2 pt-4 px-4 border-t mt-2">
                 <Link to="/reservations" onClick={() => setIsMenuOpen(false)}>
                   <Button
                     variant="outline"
