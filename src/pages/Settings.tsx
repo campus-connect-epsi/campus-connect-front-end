@@ -1,14 +1,31 @@
 import { useState } from "react";
-import { User, Lock, Bell, Eye, Save, Edit, BarChart3, Calendar, FileText } from "lucide-react";
+import {
+  User,
+  Lock,
+  Bell,
+  Eye,
+  Save,
+  Edit,
+  BarChart3,
+  Calendar,
+  FileText,
+  Layout,
+  Wrench,
+  FolderOpen,
+  MessageSquare,
+  MessageCircle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import Navigation from "@/components/Navigation";
+import { useSettings, type AppSettings } from "@/hooks/use-settings";
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState("profile");
+  const { settings, toggleSection } = useSettings();
   const [profileData, setProfileData] = useState({
     firstName: "Marie",
     lastName: "Dubois",
@@ -54,6 +71,7 @@ const Settings = () => {
 
   const tabs = [
     { id: "profile", label: "Profil", icon: User },
+    { id: "sections", label: "Sections", icon: Layout },
     { id: "security", label: "Sécurité", icon: Lock },
     { id: "notifications", label: "Notifications", icon: Bell },
     { id: "privacy", label: "Confidentialité", icon: Eye },
@@ -61,6 +79,29 @@ const Settings = () => {
     { id: "schedule", label: "Emploi du temps", icon: Calendar },
     { id: "documents", label: "Documents", icon: FileText },
   ];
+
+  const sectionLabels: Record<keyof AppSettings["enabledSections"], string> = {
+    equipment: "Matériel",
+    projects: "Projets",
+    forum: "Forum",
+    events: "Événements",
+    schedule: "Emploi du Temps",
+    documents: "Documents",
+    discussions: "Discussions",
+  };
+
+  const sectionIcons: Record<
+    keyof AppSettings["enabledSections"],
+    React.ComponentType<{ className?: string }>
+  > = {
+    equipment: Wrench,
+    projects: FolderOpen,
+    forum: MessageSquare,
+    events: Calendar,
+    schedule: Calendar,
+    documents: FileText,
+    discussions: MessageCircle,
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -97,6 +138,48 @@ const Settings = () => {
 
           {/* Main Content */}
           <div className="flex-1">
+            {/* Sections Tab */}
+            {activeTab === "sections" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Layout className="h-5 w-5 mr-2" />
+                    Activation des sections
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-4">
+                    {(
+                      Object.keys(
+                        settings.enabledSections
+                      ) as (keyof AppSettings["enabledSections"])[]
+                    ).map((section) => {
+                      const Icon = sectionIcons[section];
+                      return (
+                        <div key={section} className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <div className="p-2 bg-gray-100 rounded-md">
+                              <Icon className="h-4 w-4 text-[#00796B]" />
+                            </div>
+                            <div>
+                              <div className="font-medium">{sectionLabels[section]}</div>
+                              <div className="text-sm text-gray-600">
+                                Activer ou désactiver la section {sectionLabels[section]}
+                              </div>
+                            </div>
+                          </div>
+                          <Switch
+                            checked={settings.enabledSections[section]}
+                            onCheckedChange={() => toggleSection(section)}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Profile Tab */}
             {activeTab === "profile" && (
               <Card>

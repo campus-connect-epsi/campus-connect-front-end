@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Menu,
   X,
@@ -16,26 +16,53 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
+import { useSettings, AppSettings } from "@/hooks/use-settings";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { settings } = useSettings();
+  const [enabledSections, setEnabledSections] = useState(settings.enabledSections);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleSettingsUpdate = () => {
+      const saved = localStorage.getItem("campus-connect-settings");
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          setEnabledSections(parsed.enabledSections);
+        } catch (e) {
+          console.error("Failed to parse settings", e);
+        }
+      }
+    };
+
+    window.addEventListener("settings-updated", handleSettingsUpdate);
+    return () => window.removeEventListener("settings-updated", handleSettingsUpdate);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => {
+    if (path === "/") return location.pathname === "/";
+    return location.pathname.startsWith(path);
+  };
 
-  const navLinks = [
-    { path: "/equipment", label: "Matériel", icon: Wrench },
-    { path: "/projects", label: "Projets", icon: FolderOpen },
-    { path: "/forum", label: "Forum", icon: MessageSquare },
-    { path: "/events", label: "Événements", icon: Calendar },
-    { path: "/schedule", label: "Emploi du Temps", icon: CalendarDays },
-    { path: "/documents", label: "Documents", icon: FileText },
-    { path: "/discussions", label: "Discussions", icon: MessageCircle },
+  const allNavLinks = [
+    { path: "/equipment", label: "Matériel", icon: Wrench, key: "equipment" },
+    { path: "/projects", label: "Projets", icon: FolderOpen, key: "projects" },
+    { path: "/forum", label: "Forum", icon: MessageSquare, key: "forum" },
+    { path: "/events", label: "Événements", icon: Calendar, key: "events" },
+    { path: "/schedule", label: "Emploi du Temps", icon: CalendarDays, key: "schedule" },
+    { path: "/documents", label: "Documents", icon: FileText, key: "documents" },
+    { path: "/discussions", label: "Discussions", icon: MessageCircle, key: "discussions" },
   ];
+
+  const navLinks = allNavLinks.filter(
+    (link) => enabledSections[link.key as keyof AppSettings["enabledSections"]]
+  );
 
   return (
     <nav className="bg-white shadow-sm border-b">
@@ -55,12 +82,15 @@ const Navigation = () => {
               <Link
                 key={path}
                 to={path}
-                className={`flex items-center text-gray-700 hover:text-[#00796B] transition-colors ${
+                className={`relative flex items-center h-16 text-gray-700 hover:text-[#00796B] transition-colors ${
                   isActive(path) ? "text-[#00796B] font-semibold" : ""
                 }`}
               >
                 <Icon className="h-4 w-4 mr-1" />
                 {label}
+                {isActive(path) && (
+                  <span className="absolute bottom-0 left-0 h-0.5 w-full bg-[#00796B] rounded-t-full"></span>
+                )}
               </Link>
             ))}
             <div className="flex items-center space-x-4">
@@ -125,21 +155,23 @@ const Navigation = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden pb-4">
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-1">
               {navLinks.map(({ path, label, icon: Icon }) => (
                 <Link
                   key={path}
                   to={path}
-                  className={`flex items-center text-gray-700 hover:text-[#00796B] transition-colors ${
-                    isActive(path) ? "text-[#00796B] font-semibold" : ""
+                  className={`flex items-center px-4 py-3 text-gray-700 hover:text-[#00796B] hover:bg-gray-50 transition-colors border-l-4 ${
+                    isActive(path)
+                      ? "text-[#00796B] font-semibold bg-[#00796B]/5 border-[#00796B]"
+                      : "border-transparent"
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <Icon className="h-4 w-4 mr-2" />
+                  <Icon className="h-5 w-5 mr-3" />
                   {label}
                 </Link>
               ))}
-              <div className="flex flex-col space-y-2 pt-2 border-t">
+              <div className="flex flex-col space-y-2 pt-4 px-4 border-t mt-2">
                 <Link to="/reservations" onClick={() => setIsMenuOpen(false)}>
                   <Button
                     variant="outline"
