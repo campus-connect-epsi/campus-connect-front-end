@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Calendar, Clock, User, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,11 +8,15 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
+import { getEquipment } from "@/composables/useEquipement";
+import { createReservation } from "@/composables/useReservations";
+import type { Equipment } from "@/types";
 
 const ReserveEquipment = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const [equipment, setEquipment] = useState<Equipment | null>(null);
   const [formData, setFormData] = useState({
     startDate: "",
     endDate: "",
@@ -22,27 +26,32 @@ const ReserveEquipment = () => {
     location: "",
   });
 
-  // Mock equipment data
-  const equipment = {
-    id: 1,
-    name: "Perceuse électrique BOSCH PSB 1800 LI-2",
-    category: "Outillage",
-    status: "Disponible",
-    location: "Atelier Mécanique - Étagère B3",
-    owner: "MyDIL - Campus Connect",
-  };
+  useEffect(() => {
+    if (!id) return;
+    let mounted = true;
+    getEquipment(Number(id)).then((data) => { if (mounted) setEquipment(data); });
+    return () => { mounted = false; };
+  }, [id]);
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Reservation submitted:", formData);
-    // Here you would typically submit to an API
+    if (!equipment) return;
+
+    await createReservation({
+      equipmentName: equipment.name,
+      equipmentImage: equipment.image,
+      startDate: formData.startDate,
+      endDate: formData.endDate,
+      startTime: formData.startTime,
+      endTime: formData.endTime,
+      location: formData.location || equipment.location,
+      purpose: formData.purpose,
+    });
+
     navigate("/reservations");
   };
 
@@ -176,7 +185,11 @@ const ReserveEquipment = () => {
                     >
                       Confirmer la réservation
                     </Button>
-                    <Button type="button" variant="outline" onClick={() => navigate(-1)}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => navigate(-1)}
+                    >
                       Annuler
                     </Button>
                   </div>
@@ -192,24 +205,30 @@ const ReserveEquipment = () => {
                 <CardTitle>Résumé</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div>
-                  <h3 className="font-semibold">{equipment.name}</h3>
-                  <div className="flex items-center space-x-2 mt-1">
-                    <Badge variant="outline">{equipment.category}</Badge>
-                    <Badge className="bg-green-500">{equipment.status}</Badge>
-                  </div>
-                </div>
+                {equipment ? (
+                  <>
+                    <div>
+                      <h3 className="font-semibold">{equipment.name}</h3>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <Badge variant="outline">{equipment.category}</Badge>
+                        <Badge className="bg-green-500">{equipment.status}</Badge>
+                      </div>
+                    </div>
 
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center space-x-2 text-muted-foreground">
-                    <MapPin className="h-4 w-4" />
-                    <span>{equipment.location}</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-muted-foreground">
-                    <User className="h-4 w-4" />
-                    <span>{equipment.owner}</span>
-                  </div>
-                </div>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center space-x-2 text-muted-foreground">
+                        <MapPin className="h-4 w-4" />
+                        <span>{equipment.location}</span>
+                      </div>
+                      <div className="flex items-center space-x-2 text-muted-foreground">
+                        <User className="h-4 w-4" />
+                        <span>{equipment.owner}</span>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-muted-foreground text-sm">Chargement...</p>
+                )}
 
                 {formData.startDate && formData.endDate && (
                   <div className="border-t pt-4">
@@ -218,8 +237,8 @@ const ReserveEquipment = () => {
                       <div className="flex items-center space-x-2">
                         <Calendar className="h-4 w-4" />
                         <span>
-                          Du {new Date(formData.startDate).toLocaleDateString("fr-FR")}
-                          au {new Date(formData.endDate).toLocaleDateString("fr-FR")}
+                          Du {new Date(formData.startDate).toLocaleDateString('fr-FR')}
+                          {' '}au {new Date(formData.endDate).toLocaleDateString('fr-FR')}
                         </span>
                       </div>
                       {formData.startTime && formData.endTime && (

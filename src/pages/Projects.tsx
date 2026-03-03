@@ -1,88 +1,25 @@
-import { useState } from "react";
-import { Search, Filter, Plus, Heart, Eye } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Search, Filter, Plus, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Navigation from "@/components/Navigation";
 import ProjectCard from "@/components/ProjectCard";
+import { getProjects } from "@/composables/useProjects";
+import type { Project } from "@/types";
 
 const Projects = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("all");
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const projects = [
-    {
-      id: 1,
-      title: "Système de tri automatique des déchets",
-      author: "Marie Dubois - Génie Environnemental",
-      description:
-        "Développement d'un système IoT pour optimiser le tri des déchets sur le campus avec reconnaissance d'images",
-      image: "/placeholder.svg",
-      tags: ["IoT", "Environnement", "Innovation", "Machine Learning"],
-      likes: 42,
-      views: 235,
-      date: "2024-06-15",
-    },
-    {
-      id: 2,
-      title: "Application mobile pour covoiturage étudiant",
-      author: "Pierre Martin - Informatique",
-      description:
-        "App collaborative pour réduire l'empreinte carbone des déplacements étudiants avec système de points",
-      image: "/placeholder.svg",
-      tags: ["Mobile", "Durable", "Social", "React Native"],
-      likes: 38,
-      views: 189,
-      date: "2024-06-10",
-    },
-    {
-      id: 3,
-      title: "Robot de nettoyage autonome pour laboratoires",
-      author: "Sophie Chen - Génie Mécanique",
-      description:
-        "Conception d'un robot autonome pour maintenir la propreté des espaces de laboratoire",
-      image: "/placeholder.svg",
-      tags: ["Robotique", "Automatisation", "Innovation"],
-      likes: 55,
-      views: 312,
-      date: "2024-06-08",
-    },
-    {
-      id: 4,
-      title: "Capteur de qualité de l'air connecté",
-      author: "Alex Moreau - Génie Électrique",
-      description:
-        "Développement d'un réseau de capteurs pour surveiller la qualité de l'air sur le campus",
-      image: "/placeholder.svg",
-      tags: ["IoT", "Environnement", "Électronique", "Données"],
-      likes: 29,
-      views: 156,
-      date: "2024-06-05",
-    },
-    {
-      id: 5,
-      title: "Plateforme de gestion énergétique intelligente",
-      author: "Emma Lefebvre - Génie Civil",
-      description:
-        "Système intelligent pour optimiser la consommation énergétique des bâtiments universitaires",
-      image: "/placeholder.svg",
-      tags: ["Énergie", "IA", "Bâtiment", "Optimisation"],
-      likes: 47,
-      views: 278,
-      date: "2024-06-02",
-    },
-    {
-      id: 6,
-      title: "Assistant virtuel pour l'apprentissage",
-      author: "Lucas Dubois - Informatique",
-      description:
-        "Chatbot intelligent pour aider les étudiants dans leurs révisions et répondre aux questions fréquentes",
-      image: "/placeholder.svg",
-      tags: ["IA", "Éducation", "NLP", "Chatbot"],
-      likes: 63,
-      views: 445,
-      date: "2024-05-28",
-    },
-  ];
+  useEffect(() => {
+    let mounted = true;
+    getProjects()
+      .then((data) => { if (mounted) setProjects(data); })
+      .finally(() => { if (mounted) setLoading(false); });
+    return () => { mounted = false; };
+  }, []);
 
   const departments = [
     "all",
@@ -190,19 +127,23 @@ const Projects = () => {
 
           {/* Projects Grid */}
           <div className="flex-1">
-            <div className="grid md:grid-cols-2 gap-6">
-              {filteredProjects.map((project) => (
-                <div key={project.id} className="relative">
-                  <ProjectCard project={project} />
-                  <div className="absolute top-2 left-2 flex items-center space-x-2">
-                    <div className="bg-black bg-opacity-50 text-white px-2 py-1 rounded text-xs flex items-center">
-                      <Eye className="h-3 w-3 mr-1" />
-                      {project.views}
+            {loading ? (
+              <p className="text-gray-500">Chargement...</p>
+            ) : (
+              <div className="grid md:grid-cols-2 gap-6">
+                {filteredProjects.map(project => (
+                  <div key={project.id} className="relative">
+                    <ProjectCard project={project} />
+                    <div className="absolute top-2 left-2 flex items-center space-x-2">
+                      <div className="bg-black bg-opacity-50 text-white px-2 py-1 rounded text-xs flex items-center">
+                        <Eye className="h-3 w-3 mr-1" />
+                        {project.views}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
