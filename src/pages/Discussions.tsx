@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MessageCircle, Send, Search, Users, Clock, Pin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,84 +7,51 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import Navigation from "@/components/Navigation";
+import { getDiscussions } from "@/composables/useDiscussions";
+import { getMessages, sendMessage } from "@/composables/useMessages";
+import type { Discussion, Message } from "@/types";
 
 const Discussions = () => {
-  const [selectedDiscussion, setSelectedDiscussion] = useState<number | null>(1);
+  const [selectedDiscussion, setSelectedDiscussion] = useState<number | null>(null);
   const [newMessage, setNewMessage] = useState("");
+  const [discussions, setDiscussions] = useState<Discussion[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
-  const discussions = [
-    {
-      id: 1,
-      title: "Questions sur l'imprimante 3D Prusa",
-      lastMessage: "Merci pour l'aide, j'ai réussi à résoudre le problème !",
-      lastMessageTime: "Il y a 5 min",
-      participants: 4,
-      unread: 2,
-      pinned: true,
-      category: "Matériel",
-    },
-    {
-      id: 2,
-      title: "Projet Innovation Durable - Équipe recherche",
-      lastMessage: "La prochaine réunion est prévue vendredi à 14h",
-      lastMessageTime: "Il y a 20 min",
-      participants: 8,
-      unread: 0,
-      pinned: false,
-      category: "Projet",
-    },
-    {
-      id: 3,
-      title: "Réservation matériel événement du 15 juillet",
-      lastMessage: "Est-ce que quelqu'un peut me prêter un appareil photo ?",
-      lastMessageTime: "Il y a 1h",
-      participants: 12,
-      unread: 1,
-      pinned: false,
-      category: "Réservation",
-    },
-  ];
+  useEffect(() => {
+    let mounted = true;
+    getDiscussions().then((data) => {
+      if (mounted) {
+        setDiscussions(data);
+        if (data.length > 0) setSelectedDiscussion(data[0].id);
+      }
+    });
+    return () => { mounted = false; };
+  }, []);
 
-  const messages = [
-    {
-      id: 1,
-      author: "Pierre Martin",
-      content:
-        "Bonjour, j'ai un problème avec l'imprimante 3D. Le filament ne sort pas correctement, des idées ?",
-      timestamp: "14h32",
-      isOwn: false,
-    },
-    {
-      id: 2,
-      author: "Sophie Chen",
-      content:
-        "Salut Pierre ! As-tu vérifié la température de l'extrudeur ? Il faut qu'elle soit à 210°C pour le PLA.",
-      timestamp: "14h35",
-      isOwn: false,
-    },
-    {
-      id: 3,
-      author: "Marie Dubois",
-      content: "Exactement ! Et aussi vérifier que le filament n'est pas cassé dans le tube guide.",
-      timestamp: "14h38",
+  useEffect(() => {
+    if (selectedDiscussion === null) return;
+    let mounted = true;
+    getMessages(selectedDiscussion).then((data) => {
+      if (mounted) setMessages(data);
+    });
+    return () => { mounted = false; };
+  }, [selectedDiscussion]);
+
+  const handleSendMessage = async () => {
+    if (!newMessage.trim() || selectedDiscussion === null) return;
+    await sendMessage({
+      discussionId: selectedDiscussion,
+      author: "Moi",
+      content: newMessage,
       isOwn: true,
-    },
-    {
-      id: 4,
-      author: "Pierre Martin",
-      content:
-        "Merci pour l'aide, j'ai réussi à résoudre le problème ! C'était effectivement la température.",
-      timestamp: "14h45",
-      isOwn: false,
-    },
-  ];
-
-  const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      console.log("Sending message:", newMessage);
-      setNewMessage("");
-    }
+    });
+    setNewMessage("");
+    // Refetch messages after sending
+    const updated = await getMessages(selectedDiscussion);
+    setMessages(updated);
   };
+
+  const activeDiscussion = discussions.find(d => d.id === selectedDiscussion);
 
   return (
     <div className="min-h-screen bg-background">
@@ -162,20 +129,19 @@ const Discussions = () => {
 
           {/* Messages Area */}
           <div className="lg:col-span-2">
-            {selectedDiscussion ? (
+            {selectedDiscussion && activeDiscussion ? (
               <Card className="h-full flex flex-col">
                 <CardHeader className="border-b">
                   <CardTitle className="text-lg">
-                    {discussions.find((d) => d.id === selectedDiscussion)?.title}
+                    {activeDiscussion.title}
                   </CardTitle>
                   <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                     <span className="flex items-center">
                       <Users className="h-4 w-4 mr-1" />
-                      {discussions.find((d) => d.id === selectedDiscussion)?.participants}{" "}
-                      participants
+                      {activeDiscussion.participants} participants
                     </span>
                     <Badge variant="outline">
-                      {discussions.find((d) => d.id === selectedDiscussion)?.category}
+                      {activeDiscussion.category}
                     </Badge>
                   </div>
                 </CardHeader>
@@ -199,11 +165,11 @@ const Discussions = () => {
                                 .join("")}
                             </AvatarFallback>
                           </Avatar>
-                          <div
-                            className={`rounded-lg p-3 ${
-                              message.isOwn ? "bg-primary text-primary-foreground" : "bg-muted"
-                            }`}
-                          >
+                          <div className={`rounded-lg p-3 ${
+                            message.isOwn
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-muted'
+                          }`}>
                             <div className="text-xs font-medium mb-1 opacity-80">
                               {message.author}
                             </div>

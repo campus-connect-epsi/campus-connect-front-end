@@ -4,32 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Navigation from "@/components/Navigation";
 import EquipmentCard from "@/components/EquipmentCard";
-import { fetchEquipement } from "@/composables/useEquipement";
+import { getEquipments } from "@/composables/useEquipement";
+import type { Equipment } from "@/types";
 
-interface EquipmentItem {
-  id: number;
-  name: string;
-  category: string;
-  image: string;
-  status: "available" | "reserved" | "maintenance";
-  description: string;
-}
-
-const Equipment = () => {
+const EquipmentPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-
-  const [equipmentItems, setEquipmentItems] = useState<EquipmentItem[]>([]);
+  const [equipmentItems, setEquipmentItems] = useState<Equipment[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let mounted = true;
-    (async () => {
-      const payload = await fetchEquipement();
-      if (mounted && Array.isArray(payload)) setEquipmentItems(payload);
-    })();
-    return () => {
-      mounted = false;
-    };
+    getEquipments()
+      .then((data) => { if (mounted) setEquipmentItems(data); })
+      .finally(() => { if (mounted) setLoading(false); });
+    return () => { mounted = false; };
   }, []);
 
   const categories = [
@@ -121,11 +110,15 @@ const Equipment = () => {
 
           {/* Equipment Grid */}
           <div className="flex-1">
-            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filteredEquipment.map((item) => (
-                <EquipmentCard key={item.id} equipment={item} />
-              ))}
-            </div>
+            {loading ? (
+              <p className="text-gray-500">Chargement...</p>
+            ) : (
+              <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {filteredEquipment.map(item => (
+                  <EquipmentCard key={item.id} equipment={item} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -133,4 +126,4 @@ const Equipment = () => {
   );
 };
 
-export default Equipment;
+export default EquipmentPage;

@@ -28,26 +28,25 @@ export async function apiCall<TResponse = unknown, TBody = unknown>(
     throw new Error("Réponse serveur invalide : structure incorrecte");
   }
 
-  const { status, message, payload } = raw;
+  // Detect wrapped format { status, message, payload } vs raw data from TS-Mock-API
+  if (
+    typeof raw.status === 'string' &&
+    typeof raw.message === 'string' &&
+    'payload' in raw
+  ) {
+    const { status, message, payload } = raw;
 
-  if (typeof status !== "string") {
-    throw new Error("Champ status invalide");
-  }
-  if (typeof message !== "string") {
-    throw new Error("Champ message invalide");
-  }
+    if (!res.ok) {
+      return { status: 'error', message, payload: payload ?? null };
+    }
 
-  if (!res.ok) {
-    return {
-      status: "error",
-      message,
-      payload: payload ?? null,
-    };
+    return { status: 'success', message, payload: payload ?? null };
   }
 
+  // Raw response (TS-Mock-API or any plain REST API)
   return {
-    status: "success",
-    message,
-    payload: payload ?? null,
+    status: res.ok ? 'success' : 'error',
+    message: '',
+    payload: raw as TResponse
   };
 }

@@ -1,8 +1,14 @@
-import { apiCall } from "./useApi";
+import { apiCall } from './useApi';
+import type { Equipment } from '@/types';
 
-export async function fetchEquipement() {
-  const base = import.meta.env.VITE_API_BASE ?? "";
-  const url = `${base.replace(/\/$/, "")}/equipement.json`;
-  const res = await apiCall(url);
-  return res.payload;
+const base = () => (import.meta.env.VITE_API_BASE ?? '').replace(/\/$/, '');
+
+export async function getEquipments(): Promise<Equipment[]> {
+  const res = await apiCall<Equipment[]>(`${base()}/equipments`);
+  return res.payload ?? [];
+}
+
+export async function getEquipment(id: number): Promise<Equipment | null> {
+  const all = await getEquipments();
+  return all.find((e) => e.id === id) ?? null;
 }
